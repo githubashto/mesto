@@ -1,0 +1,17 @@
+.profile__add-button {
+  min-width: 150px;
+  min-height: 50px;
+  justify-self: end;
+  font-family: 'Inter', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  color: #fff;
+  border: 2px solid #fff;
+  box-sizing: border-box;
+  border-radius: 2px;
+  padding: 0;
+  margin-left: auto;
+  background-color: #000;
+  padding: 0;
+}
