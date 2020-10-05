@@ -8,3 +8,9 @@
   line-height: 56px;
   color: #fff;
 }
+
+@media screen and (max-width: 425px) {
+.profile__name {
+  font-size: 27px;
+ }
+}

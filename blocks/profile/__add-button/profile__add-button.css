@@ -13,5 +13,15 @@
   padding: 0;
   margin-left: auto;
   background-color: #000;
-  padding: 0;
+}
+
+.profile__add-button:hover {
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 425px) {
+.profile__add-button {
+    width: 100%;
+  }
 }
