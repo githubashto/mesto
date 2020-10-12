@@ -13,6 +13,9 @@
   padding: 0;
   margin-left: auto;
   background-color: #000;
+  transition-property: opacity, border;
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
 }
 
 .profile__add-button:hover {
@@ -20,7 +23,7 @@
   opacity: 0.6;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 767px) {
 .profile__add-button {
     width: 100%;
   }

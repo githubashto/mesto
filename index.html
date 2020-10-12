@@ -13,24 +13,24 @@
   <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="root">
-  <header class="header section">
+  <header class="header block">
     <img src="images/mesto-russia.svg" alt="Mesto Russia" class="logo">
   </header>
 
-  <main>
-  <section class="profile section">
+  <main class="block">
+  <section class="profile">
     <img src="./images/avatar.jpg" class="profile__avatar">
     <div class="profile__info">
-      <div class="profile__header">
+      <div class="profile__title">
         <h2 class="profile__name">Жак-Ив Кусто</h2>
-        <button class="profile__edit-button"></button>
+        <button type="button" class="profile__edit-button"></button>
       </div>
-      <p class="profile__profession">Исследователь океана</p>
+        <p class="profile__profession">Исследователь океана</p>
     </div>
-    <button class="profile__add-button">+</button>
+    <button type="button" class="profile__add-button">+</button>
   </section>
 
-  <section class="elements section">
+  <section class="elements">
     <article class="element">
       <img src="./images/karachayevo-cherkessk.png" alt="Сентинский храм под Карачаевском" class="element__image">
       <div class="element__caption">
@@ -52,8 +52,8 @@
         <button class="element__like"></button>
       </div>
     </article>
-    <img src="./images/elbrus.png" alt="Закат на горе Эльбрус" class="element__image">
     <article class="element">
+    <img src="./images/elbrus.png" alt="Закат на горе Эльбрус" class="element__image">
       <div class="element__caption">
         <h3 class="element__title">Гора Эльбрус</h1>
         <button class="element__like"></button>
@@ -76,5 +76,16 @@
   </section>
   </main>
 
-  <footer class="footer section">&copy; 2020 Mesto Russia</footer>
+  <footer class="footer block">&copy; 2020 Mesto Russia</footer>
+
+  <section class="popup">
+    <form class="popup__container">
+      <button class="popup__close">✕</button>
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <input type="text" name="name" value="" class="popup__input popup__input_content_name">
+      <input type="text" name="profession" value="" class="popup__input popup__input_content_profession">
+      <input type="submit" value="Сохранить" class="popup__submit">
+    </form>
+  </section>
+  <script src="./scripts/script.js"></script>
   </body>

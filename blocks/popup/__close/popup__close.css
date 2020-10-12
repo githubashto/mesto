@@ -1,0 +1,23 @@
+.popup__close {
+  font-family: 'Inter', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(36px, -36px);
+  transition-property: opacity;
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
+}
+
+.popup__close:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}

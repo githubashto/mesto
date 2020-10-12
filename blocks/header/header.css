@@ -1,9 +1,6 @@
 .header {
   margin-top: 45px;
-  margin-left: auto;
-  margin-right: auto;
   margin-bottom: 0;
-  width: calc(100% - 199px*2);
   min-height: 74px;
   display: flex;
   flex-direction: column;
