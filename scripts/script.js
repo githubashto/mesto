@@ -8,24 +8,21 @@ let jobInput = document.querySelector(".popup__input_content_profession");
 let profileName = document.querySelector(".profile__name");
 let profileProfession = document.querySelector(".profile__profession");
 
-function openPopup() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileProfession.textContent;
-  popup.classList.add('popup_opened');
+function togglePopup() {
+  popup.classList.toggle('popup_opened'); // переключаем видимость попапа
+  if (popup.classList.contains('popup_opened') === true) { // если попап открыт
+    nameInput.value = profileName.textContent; // записываем в значения полей текст из текущей страницы
+    jobInput.value = profileProfession.textContent;
+  }
 }
-
-function closePopup() {
-  popup.classList.remove('popup_opened');
-}
-
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
-  profileName.textContent = nameInput.value;
+  profileName.textContent = nameInput.value; // записываем в текст страницы значения полей из формы
   profileProfession.textContent = jobInput.value;
-  closePopup();
+  togglePopup();
 }
 
-buttonEditProfile.addEventListener('click', openPopup);
-buttonClosePopup.addEventListener('click', closePopup);
+buttonEditProfile.addEventListener('click', togglePopup);
+buttonClosePopup.addEventListener('click', togglePopup);
 formElement.addEventListener('submit', formSubmitHandler);
