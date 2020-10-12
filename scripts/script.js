@@ -14,19 +14,18 @@ function openPopup() {
   popup.classList.add('popup_opened');
 }
 
-buttonEditProfile.addEventListener('click', openPopup);
-
 function closePopup() {
   popup.classList.remove('popup_opened');
 }
 
-buttonClosePopup.addEventListener('click', closePopup);
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileProfession.textContent = jobInput.value;
-  popup.classList.remove('popup_opened');
+  closePopup();
 }
 
+buttonEditProfile.addEventListener('click', openPopup);
+buttonClosePopup.addEventListener('click', closePopup);
 formElement.addEventListener('submit', formSubmitHandler);

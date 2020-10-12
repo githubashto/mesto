@@ -2,29 +2,27 @@
   min-width: 150px;
   min-height: 50px;
   justify-self: end;
-  font-family: 'Inter', Arial, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 36px;
-  color: #fff;
+  background-image: url(../../../images/add-button.svg);
+  background-repeat: no-repeat;
+  background-position: center;
   border: 2px solid #fff;
   box-sizing: border-box;
   border-radius: 2px;
   padding: 0;
   margin-left: auto;
   background-color: #000;
-  transition-property: opacity, border;
+  transition-property: opacity;
   transition-duration: 0.3s;
   transition-timing-function: linear;
 }
 
 .profile__add-button:hover {
-  border: 2px solid rgba(255, 255, 255, 0.6);
   opacity: 0.6;
 }
 
 @media screen and (max-width: 767px) {
 .profile__add-button {
     width: 100%;
+    margin-top: 36px;
   }
 }

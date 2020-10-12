@@ -9,10 +9,14 @@
   margin-right: 21px;
   padding: 0;
   border: 0;
+  transition-property: opacity;
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
 }
 
 .element__like:hover {
   cursor: pointer;
+  opacity: 0.6;
 }
 
 .element__like:focus {

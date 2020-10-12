@@ -2,10 +2,6 @@
   background-color: #fff;
   border-radius: 15px;
   position: relative;
-  padding-top: 34px;
-  padding-left: 36px;
-  padding-right: 36px;
-  padding-bottom: 37px;
   width: calc(100% - 425px*2);
   max-width: 430px;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
@@ -16,3 +12,4 @@
   width: calc(100% - 19px*2);
   }
 }
+
