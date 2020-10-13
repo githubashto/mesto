@@ -15,7 +15,7 @@
   white-space: nowrap;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 992px) {
 .profile__profession {
   margin-top: 14px;
   margin-left: auto;

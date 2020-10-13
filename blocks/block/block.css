@@ -4,7 +4,7 @@
   width: calc(100% - 199px*2);
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 992px) {
 .block {
   width: calc(100% - 19px*2);
   }
