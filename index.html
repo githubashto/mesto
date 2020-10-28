@@ -79,16 +79,26 @@
   <footer class="footer block"><p class="footer__text">&copy; 2020 Mesto Russia</p></footer>
 
   <section class="popup">
-    <div class="popup__container">
-      <button type="button" class="popup__close"></button>
+    <div class="popup__container popup__container_content_profile">
+      <button type="button" class="popup__close popup__close_content_profile"></button>
       <form class="popup__form" name="profile">
         <h2 class="popup__title">Редактировать профиль</h2>
         <input type="text" name="name" value="" class="popup__input popup__input_content_name">
         <input type="text" name="profession" value="" class="popup__input popup__input_content_profession">
-        <button type="submit" class="popup__submit">Сохранить</button>
+        <button type="submit" class="popup__submit popup__submit_content_profile">Сохранить</button>
+      </form>
+    </div>
+    <div class="popup__container popup__container_content_place">
+      <button type="button" class="popup__close popup__close_content_place"></button>
+      <form class="popup__form" name="profile">
+        <h2 class="popup__title">Новое место</h2>
+        <input type="text" name="placename" value="" placeholder="Название" class="popup__input  popup__input_content_placename">
+        <input type="url" name="url" value="" placeholder="Ссылка на картинку" class="popup__input  popup__input_content_url">
+        <button type="submit" class="popup__submit popup__submit_content_place">Создать</button>
       </form>
     </div>
   </section>
+
   <template class="template">
     <article class="element">
     <img src="" alt="" class="element__image">
