@@ -40,12 +40,15 @@ const buttonCloseProfilePopup = document.querySelector(".popup__close_content_pr
 const buttonClosePlacePopup = document.querySelector(".popup__close_content_place");
 
 // поля карточки и формы
-let nameInput = document.querySelector(".popup__input_content_name");
-let jobInput = document.querySelector(".popup__input_content_profession");
-let profileName = document.querySelector(".profile__name");
-let profileProfession = document.querySelector(".profile__profession");
+const nameInput = document.querySelector(".popup__input_content_name");
+const jobInput = document.querySelector(".popup__input_content_profession");
+const profileName = document.querySelector(".profile__name");
+const profileProfession = document.querySelector(".profile__profession");
+const placenameInput = document.querySelector(".popup__input_content_placename");
+const linkInput = document.querySelector(".popup__input_content_url");
 
-const getCard = (card) => {
+
+function getCard(card) {
   const cardElement = template.cloneNode(true).content;
   const cardTitle = cardElement.querySelector(".element__title");
   const cardImage = cardElement.querySelector(".element__image");
@@ -71,23 +74,26 @@ function openPopup(popupForm) {
   popupForm.classList.add('popup_opened');
 }
 
-function closePopup (popupButton) {
+function closePopup(popupForm) {
   popup.classList.remove('popup_opened');
-  const popupContainer = popupButton.closest('.popup__container');
-  popupContainer.classList.remove('popup_opened');
+  popupForm.classList.remove('popup_opened');
 }
 
 function handleProfileForm (evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value; // записываем в текст страницы значения полей из формы
   profileProfession.textContent = jobInput.value;
-  closePopup();
+  closePopup(formEditProfile);
 }
 
 function handlePlaceForm (evt) {
   evt.preventDefault();
-
-  closePopup();
+  const card = getCard({
+      name: placenameInput.value,
+      link: linkInput.value
+    });
+  cardsContainer.prepend(card);
+  closePopup(formAddPlace);
 }
 
 // слушатели событий
@@ -96,21 +102,16 @@ buttonEditProfile.addEventListener('click', function() {
   jobInput.value = profileProfession.textContent;
   openPopup(formEditProfile);
 });
-
 buttonAddPlace.addEventListener('click', function() {
   openPopup(formAddPlace);
 });
-
 buttonCloseProfilePopup.addEventListener('click',  function() {
   closePopup(buttonCloseProfilePopup);
 });
-
 buttonClosePlacePopup.addEventListener('click',  function() {
   closePopup(buttonClosePlacePopup);
 });
-
 formEditProfile.addEventListener('submit', handleProfileForm);
-
 formAddPlace.addEventListener('submit', handlePlaceForm);
 
 
