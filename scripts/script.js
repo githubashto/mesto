@@ -55,6 +55,10 @@ function getCard(card) {
   cardElement.querySelector('.element__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like_active');
   });
+  cardElement.querySelector('.element__delete').addEventListener('click', function (evt) {
+    const card = evt.target.closest('.element');
+    card.remove();
+  });
   // cardImage.addEventListener("click", () => handleImagePreview(cardDetails));
   cardTitle.textContent = card.name;
   cardImage.src = card.link;

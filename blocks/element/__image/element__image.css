@@ -1,6 +1,8 @@
 .element__image {
-  object-fit: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  min-width: 282px;
-  min-height: 282px;
+  height: 100%;
+  object-fit: cover;
 }
