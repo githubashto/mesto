@@ -106,10 +106,10 @@ buttonAddPlace.addEventListener('click', function() {
   openPopup(formAddPlace);
 });
 buttonCloseProfilePopup.addEventListener('click',  function() {
-  closePopup(buttonCloseProfilePopup);
+  closePopup(formEditProfile);
 });
 buttonClosePlacePopup.addEventListener('click',  function() {
-  closePopup(buttonClosePlacePopup);
+  closePopup(formAddPlace);
 });
 formEditProfile.addEventListener('submit', handleProfileForm);
 formAddPlace.addEventListener('submit', handlePlaceForm);
