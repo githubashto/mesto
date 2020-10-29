@@ -17,6 +17,7 @@
 .element__like:hover {
   cursor: pointer;
   opacity: 0.6;
+  background-image: url(../../../images/like-hover.svg);
 }
 
 .element__like:focus {

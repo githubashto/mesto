@@ -52,22 +52,15 @@ function getCard(card) {
   const cardElement = template.cloneNode(true).content;
   const cardTitle = cardElement.querySelector(".element__title");
   const cardImage = cardElement.querySelector(".element__image");
-
+  cardElement.querySelector('.element__like').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__like_active');
+  });
   // cardImage.addEventListener("click", () => handleImagePreview(cardDetails));
   cardTitle.textContent = card.name;
   cardImage.src = card.link;
   cardImage.alt = card.name;
   return cardElement;
 };
-
-
-// function togglePopup() {
-//   popup.classList.toggle('popup_opened'); // переключаем видимость попапа
-//   if (popup.classList.contains('popup_opened') === true) { // если попап открыт
-//     nameInput.value = profileName.textContent; // записываем в значения полей текст из текущей страницы
-//     jobInput.value = profileProfession.textContent;
-//   }
-// }
 
 function openPopup(popupForm) {
   popup.classList.add('popup_opened');
@@ -81,7 +74,8 @@ function closePopup(popupForm) {
 
 function handleProfileForm (evt) {
   evt.preventDefault();
-  profileName.textContent = nameInput.value; // записываем в текст страницы значения полей из формы
+   // записываем в текст страницы значения полей из формы
+  profileName.textContent = nameInput.value;
   profileProfession.textContent = jobInput.value;
   closePopup(formEditProfile);
 }
@@ -102,23 +96,28 @@ buttonEditProfile.addEventListener('click', function() {
   jobInput.value = profileProfession.textContent;
   openPopup(formEditProfile);
 });
+
 buttonAddPlace.addEventListener('click', function() {
   openPopup(formAddPlace);
 });
+
 buttonCloseProfilePopup.addEventListener('click',  function() {
   closePopup(formEditProfile);
 });
+
 buttonClosePlacePopup.addEventListener('click',  function() {
   closePopup(formAddPlace);
 });
-formEditProfile.addEventListener('submit', handleProfileForm);
-formAddPlace.addEventListener('submit', handlePlaceForm);
 
+formEditProfile.addEventListener('submit', handleProfileForm);
+
+formAddPlace.addEventListener('submit', handlePlaceForm);
 
 // начальная загрузка карточек
 initialCards.forEach((data) => {
   const card = getCard(data);
   cardsContainer.append(card);
 });
+
 
 
