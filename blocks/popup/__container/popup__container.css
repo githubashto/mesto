@@ -11,8 +11,7 @@
   padding-left: 36px;
   padding-right: 36px;
   padding-bottom: 37px;
-  opacity: 0;
-  transition: opacity 100s linear;
+  visibility: hidden;
 }
 
 @media screen and (max-width: 992px) {
