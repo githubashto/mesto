@@ -42,8 +42,8 @@
       <button type="button" class="popup__close popup__close_content_profile"></button>
       <form class="popup__form" name="profile">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input type="text" name="name" value="" class="popup__input popup__input_content_name">
-        <input type="text" name="profession" value="" class="popup__input popup__input_content_profession">
+        <input type="text" name="name" value="" required class="popup__input popup__input_content_name">
+        <input type="text" name="profession" value="" required class="popup__input popup__input_content_profession">
         <button type="submit" class="popup__submit popup__submit_content_profile">Сохранить</button>
       </form>
     </div>
@@ -53,8 +53,8 @@
       <button type="button" class="popup__close popup__close_content_place"></button>
       <form class="popup__form" name="profile">
         <h2 class="popup__title">Новое место</h2>
-        <input type="text" name="placename" value="" placeholder="Название" class="popup__input  popup__input_content_placename">
-        <input type="url" name="url" value="" placeholder="Ссылка на картинку" class="popup__input  popup__input_content_url">
+        <input type="text" name="placename" value="" required placeholder="Название" class="popup__input  popup__input_content_placename">
+        <input type="url" name="url" value="" required placeholder="Ссылка на картинку" class="popup__input  popup__input_content_url">
         <button type="submit" class="popup__submit popup__submit_content_place">Создать</button>
       </form>
     </div>
@@ -66,6 +66,7 @@
       <figcaption class="popup__caption"></figcaption>
     </figure>
   </section>
+
 <!--Шаблон карточки — не отображается-->
   <template class="template">
     <article class="element">
