@@ -121,7 +121,7 @@ buttonCloseProfilePopup.addEventListener('click',  () => closePopup(formEditProf
 
 buttonClosePlacePopup.addEventListener('click',  () => closePopup(formAddPlace));
 
-buttonClosePreviewPopup.addEventListener('click',  () => closePopup(popupImage));
+buttonClosePreviewPopup.addEventListener('click',  () => closePopup(imagePreview));
 
 
 formEditProfile.addEventListener('submit', handleProfileForm);
