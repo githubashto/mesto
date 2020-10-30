@@ -36,7 +36,8 @@
 
   <footer class="footer block"><p class="footer__text">&copy; 2020 Mesto Russia</p></footer>
 
-  <section class="popup">
+  <!--Попапы. Не видны при загрузке, открываются по кнопкам-->
+  <section class="popup popup_type_profile">
     <div class="popup__container popup__container_content_profile">
       <button type="button" class="popup__close popup__close_content_profile"></button>
       <form class="popup__form" name="profile">
@@ -46,6 +47,8 @@
         <button type="submit" class="popup__submit popup__submit_content_profile">Сохранить</button>
       </form>
     </div>
+  </section>
+  <section class="popup popup_type_place">
     <div class="popup__container popup__container_content_place">
       <button type="button" class="popup__close popup__close_content_place"></button>
       <form class="popup__form" name="profile">
@@ -55,13 +58,15 @@
         <button type="submit" class="popup__submit popup__submit_content_place">Создать</button>
       </form>
     </div>
+  </section>
+  <section class="popup popup_type_image">
     <figure class="popup__container popup__container_content_preview">
       <button type="button" class="popup__close popup__close_content_preview"></button>
       <img src="" alt="" class="popup__image">
       <figcaption class="popup__caption"></figcaption>
     </figure>
   </section>
-
+<!--Шаблон карточки — не отображается-->
   <template class="template">
     <article class="element">
     <div class="element__picture">
@@ -74,6 +79,7 @@
     </div>
     </article>
   </template>
+  <script src="./scripts/cards.js"></script>
   <script src="./scripts/script.js"></script>
   </body>
 </html>
