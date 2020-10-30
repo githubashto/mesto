@@ -13,6 +13,7 @@
   transition-property: opacity;
   transition-duration: 0.3s;
   transition-timing-function: linear;
+  z-index: 2;
 }
 
 .element__delete:hover {

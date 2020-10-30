@@ -59,8 +59,7 @@ function getCard(card) {
     const card = evt.target.closest('.element');
     card.remove();
   });
-  // cardImage.addEventListener("click", () => handleImagePreview(card));
-
+  // cardImage.addEventListener("click", () => handleImagePreview(cardDetails));
   cardTitle.textContent = card.name;
   cardImage.src = card.link;
   cardImage.alt = card.name;
@@ -102,7 +101,9 @@ buttonEditProfile.addEventListener('click', function() {
   openPopup(formEditProfile);
 });
 
-buttonAddPlace.addEventListener('click', () => openPopup(formAddPlace));
+buttonAddPlace.addEventListener('click', function() {
+  openPopup(formAddPlace);
+});
 
 buttonCloseProfilePopup.addEventListener('click',  function() {
   closePopup(formEditProfile);
