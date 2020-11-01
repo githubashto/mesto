@@ -40,10 +40,12 @@
   <section class="popup popup_type_profile">
     <div class="popup__container popup__container_content_profile">
       <button type="button" class="popup__close popup__close_content_profile"></button>
-      <form class="popup__form" name="profile">
+      <form class="popup__form" name="profile" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input type="text" name="name" value="" required class="popup__input popup__input_content_name">
-        <input type="text" name="profession" value="" required class="popup__input popup__input_content_profession">
+        <input type="text" name="name" id="form-name" minlength="2" maxlength="40" value="" class="popup__input popup__input_content_name" required>
+        <span id = "form-name-error" class="popup__error"></span>
+        <input type="text" name="profession" id="form-profession" minlength="2" maxlength="200" value="" class="popup__input popup__input_content_profession" required>
+        <span id = "form-profession-error" class="popup__error"></span>
         <button type="submit" class="popup__submit popup__submit_content_profile">Сохранить</button>
       </form>
     </div>
@@ -51,10 +53,12 @@
   <section class="popup popup_type_place">
     <div class="popup__container popup__container_content_place">
       <button type="button" class="popup__close popup__close_content_place"></button>
-      <form class="popup__form" name="profile">
+      <form class="popup__form" name="place" novalidate>
         <h2 class="popup__title">Новое место</h2>
-        <input type="text" name="placename" value="" required placeholder="Название" class="popup__input  popup__input_content_placename">
-        <input type="url" name="url" value="" required placeholder="Ссылка на картинку" class="popup__input  popup__input_content_url">
+        <input type="text" name="placename" id="form-placename" minlength="2" maxlength="30" placeholder="Название" value="" class="popup__input popup__input_content_placename" required>
+        <span id = "form-placename-error" class="popup__error"></span>
+        <input type="url" name="url" id="form-url" placeholder="Ссылка на картинку" value="" class="popup__input popup__input_content_url" required>
+        <span id = "form-url-error" class="popup__error"></span>
         <button type="submit" class="popup__submit popup__submit_content_place">Создать</button>
       </form>
     </div>
@@ -67,7 +71,7 @@
     </figure>
   </section>
 
-<!--Шаблон карточки — не отображается-->
+<!--Шаблон карточки — не отображается, нужен для добавления карточек-->
   <template class="template">
     <article class="element">
     <div class="element__picture">
@@ -81,6 +85,7 @@
     </article>
   </template>
   <script src="./scripts/cards.js"></script>
+  <script src="./scripts/validate.js"></script>
   <script src="./scripts/script.js"></script>
   </body>
 </html>

@@ -19,10 +19,10 @@
   transition-timing-function: linear;
   }
 
-  .popup__submit:hover {
+.popup__submit:hover {
     opacity: 0.8;
     cursor: pointer;
-  }
+}
 
 @media screen and (max-width: 425px) {
 .popup__submit  {

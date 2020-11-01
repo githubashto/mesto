@@ -1,4 +1,4 @@
-//массив карточек для начальной загрузки
+//карточки и контейнер
 const template = document.querySelector(".template");
 const cardsContainer = document.querySelector(".elements");
 
@@ -32,15 +32,18 @@ function getCard(card) {
   const cardElement = template.cloneNode(true).content;
   const cardTitle = cardElement.querySelector(".element__title");
   const cardImage = cardElement.querySelector(".element__image");
-  //слушатель для лайка/анлайка
-  cardElement.querySelector('.element__like').addEventListener('click', evt => likeCard(evt));
-  //слушатель для удаления карточки
-  cardElement.querySelector('.element__delete').addEventListener('click', evt => removeCard(evt));
+  const cardLike = cardElement.querySelector('.element__like');
+  const cardDelete = cardElement.querySelector('.element__delete');
 
   cardTitle.textContent = card.name;
   cardImage.src = card.link;
   cardImage.alt = card.name;
-// слушатель клика по изображению (превью)
+  //добавляем слушатели
+  // — лайк/анлайк
+  cardLike.addEventListener('click', likeCard);
+  // — удаление карточки
+  cardDelete.addEventListener('click', removeCard);
+ // — превью изображения
   cardImage.addEventListener("click", () => handleImagePreview(card));
 
   return cardElement;
