@@ -10,12 +10,9 @@ const formEditProfile = document.querySelector(".popup__container_content_profil
 const formAddPlace = document.querySelector(".popup__container_content_place");
 const imagePreview = document.querySelector(".popup__container_content_preview");
 
-// кнопки открытия и закрытия попапов
+// кнопки открытия попапов
 const buttonEditProfile = document.querySelector(".profile__edit-button");
 const buttonAddPlace = document.querySelector(".profile__add-button");
-const buttonCloseProfilePopup = document.querySelector(".popup__close_content_profile");
-const buttonClosePlacePopup = document.querySelector(".popup__close_content_place");
-const buttonClosePreviewPopup = document.querySelector(".popup__close_content_preview");
 
 // поля карточки и формы
 const nameInput = document.querySelector(".popup__input_content_name");
@@ -98,7 +95,8 @@ function likeCard(evt) {
   evt.target.classList.toggle('element__like_active');
 }
 
-// слушатели событий — открытие попапов
+// слушатели событий
+// — открытие попапов
 buttonEditProfile.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileProfession.textContent;
@@ -107,14 +105,20 @@ buttonEditProfile.addEventListener('click', () => {
 
 buttonAddPlace.addEventListener('click', () => openPopup(popupPlace));
 
-// слушатели событий — закрытие попапов
-buttonCloseProfilePopup.addEventListener('click',  () => closePopup(popupProfile));
+// — закрытие попапов
+function enableClosePopup() {
+  const buttonCloseList = Array.from(document.querySelectorAll('.popup__close'));
+  buttonCloseList.forEach((buttonClose) => {
+    buttonClose.addEventListener('click', evt => {
+    const targetPopup  = evt.target.closest('.popup');
+    closePopup(targetPopup);
+    });
+  });
+}
 
-buttonClosePlacePopup.addEventListener('click',  () => closePopup(popupPlace));
+enableClosePopup();
 
-buttonClosePreviewPopup.addEventListener('click',  () => closePopup(popupPreview));
-
-// слушатели событий — отправка форм
+// — отправка форм
 formEditProfile.addEventListener('submit', handleProfileForm);
 formAddPlace.addEventListener('submit', handlePlaceForm);
 
