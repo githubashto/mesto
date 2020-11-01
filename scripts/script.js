@@ -115,25 +115,57 @@ function enableCloseButtons() {
     });
   });
 }
+
 enableCloseButtons();
 
 // - закрытие попапов кликом по оверлею
+function handleOverlayClick(evt, targetPopup) {
+  const popupContainer = evt.target.closest('.popup__container');
+  // проверяем, не произошёл ли клик внутри контейнера формы
+  if (!popupContainer) {
+    closePopup(targetPopup);
+  }
+}
+
 function enableClickClose() {
   const popupList = Array.from(document.querySelectorAll('.popup'));
   popupList.forEach((targetPopup) => {
-    targetPopup.addEventListener('click', evt => {
-      const popupContainer = evt.target.closest('.popup__container');
-      if (!popupContainer) {
-        closePopup(targetPopup);
-      }
-    });
+    targetPopup.addEventListener('click', evt => handleOverlayClick(evt, targetPopup));
   });
 }
+
 enableClickClose();
 
-// — отправка форм
+// - закрытие попапов нажатием Esc на клавиатуре
+function handleEscKey(evt) {
+  const targetPopup = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape') {
+    closePopup(targetPopup);
+  }
+}
+
+document.addEventListener('keydown', handleEscKey);
+
+// — отправка форм нажатием кнопки
 formEditProfile.addEventListener('submit', handleProfileForm);
 formAddPlace.addEventListener('submit', handlePlaceForm);
+
+// - отправка форм нажатием Enter
+function handleEnterKey(inputElement) {
+
+  if (evt.key === 'Enter') {
+   switch(inputElement)  {
+    case nameInput:
+    case jobInput:
+      handleProfileForm();
+      break;
+    case placenameInput:
+    case linkInput:
+      handlePlaceForm();
+      break;
+    }
+  }
+}
 
 // начальная загрузка карточек
 initialCards.forEach((data) => {

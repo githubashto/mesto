@@ -1,7 +1,6 @@
 // показать сообщение об ошибке
 function showError(formElement, inputElement, errorMessage, inputErrorClass, errorClass) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  console.log(errorElement);
   inputElement.classList.add(inputErrorClass);
   errorElement.classList.add(errorClass);
   errorElement.textContent = errorMessage;
@@ -51,6 +50,12 @@ function setInputListeners(formElement, inputSelector, submitButtonSelector, inp
     inputElement.addEventListener('input', () => {
       checkInputValidity(formElement, inputElement, inputErrorClass, errorClass);
       toggleButtonState(inputList, submitElement,  inactiveButtonClass);
+    });
+    // слушатель для Enter
+    inputElement.addEventListener('keydown', () => {
+     if (!hasInvalidInput(inputList)) {
+      handleEnterKey(inputElement);
+     }
     });
   });
 }
