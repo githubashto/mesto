@@ -35,7 +35,7 @@ function getCard(card) {
   cardTitle.textContent = card.name;
   cardImage.src = card.link;
   cardImage.alt = card.name;
-  //добавляем слушатели
+  // добавляем слушатели
   // — лайк/анлайк
   cardLike.addEventListener('click', likeCard);
   // — удаление карточки
@@ -84,13 +84,13 @@ function handlePlaceForm(evt) {
   closePopup(popupPlace);
 }
 
-//удаление карточки
+// удаление карточки
 function removeCard(evt) {
   const card = evt.target.closest('.element');
   card.remove();
 }
 
-//лайк и анлайк
+// лайк и анлайк
 function likeCard(evt) {
   evt.target.classList.toggle('element__like_active');
 }
@@ -105,18 +105,31 @@ buttonEditProfile.addEventListener('click', () => {
 
 buttonAddPlace.addEventListener('click', () => openPopup(popupPlace));
 
-// — закрытие попапов
-function enableClosePopup() {
+// — закрытие попапов крестиком
+function enableCloseButtons() {
   const buttonCloseList = Array.from(document.querySelectorAll('.popup__close'));
   buttonCloseList.forEach((buttonClose) => {
     buttonClose.addEventListener('click', evt => {
-    const targetPopup  = evt.target.closest('.popup');
+    const targetPopup = evt.target.closest('.popup');
     closePopup(targetPopup);
     });
   });
 }
+enableCloseButtons();
 
-enableClosePopup();
+// - закрытие попапов кликом по оверлею
+function enableClickClose() {
+  const popupList = Array.from(document.querySelectorAll('.popup'));
+  popupList.forEach((targetPopup) => {
+    targetPopup.addEventListener('click', evt => {
+      const popupContainer = evt.target.closest('.popup__container');
+      if (!popupContainer) {
+        closePopup(targetPopup);
+      }
+    });
+  });
+}
+enableClickClose();
 
 // — отправка форм
 formEditProfile.addEventListener('submit', handleProfileForm);
@@ -127,6 +140,3 @@ initialCards.forEach((data) => {
   const card = getCard(data);
   cardsContainer.append(card);
 });
-
-
-
