@@ -49,11 +49,13 @@ function getCard(card) {
 // открытие попапа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', evt => handleEscKey(evt, popup));
 }
 
 // закрытие попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handleEscKey);
 }
 
 // открытие превью
@@ -95,14 +97,16 @@ function likeCard(evt) {
   evt.target.classList.toggle('element__like_active');
 }
 
-// слушатели событий
-// — открытие попапов
+// обраюотка нажатий мыши и клавиатуры, слушатели событий
+
+// — открыть форму редактирования профиля и заполнить значения
 buttonEditProfile.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileProfession.textContent;
   openPopup(popupProfile);
 });
 
+// - открыть форму добавления места
 buttonAddPlace.addEventListener('click', () => openPopup(popupPlace));
 
 // — закрытие попапов крестиком
@@ -137,14 +141,11 @@ function enableClickClose() {
 enableClickClose();
 
 // - закрытие попапов нажатием Esc на клавиатуре
-function handleEscKey(evt) {
-  const targetPopup = document.querySelector('.popup_opened');
+function handleEscKey(evt, targetPopup) {
   if (evt.key === 'Escape') {
     closePopup(targetPopup);
   }
 }
-
-document.addEventListener('keydown', handleEscKey);
 
 // — отправка форм нажатием кнопки
 formEditProfile.addEventListener('submit', handleProfileForm);
