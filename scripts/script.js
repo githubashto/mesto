@@ -1,3 +1,6 @@
+import { initialCards } from './Card.js';
+import { showError, hideError, hasInvalidInput, toggleButtonState, checkInputValidity, setInputListeners, enableValidation } from './FormValidator.js';
+
 //карточки и контейнер
 const template = document.querySelector(".template");
 const cardsContainer = document.querySelector(".elements");

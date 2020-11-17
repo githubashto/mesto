@@ -1,5 +1,5 @@
 // показать сообщение об ошибке
-function showError(formElement, inputElement, errorMessage, inputErrorClass, errorClass) {
+export function showError(formElement, inputElement, errorMessage, inputErrorClass, errorClass) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.add(inputErrorClass);
   errorElement.classList.add(errorClass);
@@ -7,7 +7,7 @@ function showError(formElement, inputElement, errorMessage, inputErrorClass, err
 }
 
 // скрыть сообщение об ошибке
-function hideError(formElement, inputElement, inputErrorClass, errorClass) {
+export function hideError(formElement, inputElement, inputErrorClass, errorClass) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.remove(inputErrorClass);
   errorElement.classList.remove(errorClass);
@@ -15,14 +15,14 @@ function hideError(formElement, inputElement, inputErrorClass, errorClass) {
 }
 
 // проверка валидности полей в форме
-function hasInvalidInput(inputList) {
+export function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => {
   return !inputElement.validity.valid;
   });
 }
 
 // переключение кнопки сабмита
-function toggleButtonState(inputList, submitElement, inactiveButtonClass) {
+export function toggleButtonState(inputList, submitElement, inactiveButtonClass) {
   if (hasInvalidInput(inputList)) {
     submitElement.classList.add(inactiveButtonClass);
     submitElement.disabled = true;
@@ -33,7 +33,7 @@ function toggleButtonState(inputList, submitElement, inactiveButtonClass) {
 }
 
 // проверка валидности поля
-function checkInputValidity(formElement, inputElement, inputErrorClass, errorClass) {
+export function checkInputValidity(formElement, inputElement, inputErrorClass, errorClass) {
   if (!inputElement.validity.valid) {
     showError(formElement, inputElement, inputElement.validationMessage, inputErrorClass, errorClass);
   } else {
@@ -42,7 +42,7 @@ function checkInputValidity(formElement, inputElement, inputErrorClass, errorCla
 }
 
 // добавляем слушатели к полям формы
-function setInputListeners(formElement, inputSelector, submitButtonSelector, inputErrorClass, errorClass, inactiveButtonClass) {
+export function setInputListeners(formElement, inputSelector, submitButtonSelector, inputErrorClass, errorClass, inactiveButtonClass) {
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   const submitElement = formElement.querySelector(submitButtonSelector);
   toggleButtonState(inputList, submitElement, inactiveButtonClass);
@@ -61,7 +61,7 @@ function setInputListeners(formElement, inputSelector, submitButtonSelector, inp
 }
 
 // добавляем валидацию ко всем формам
-function enableValidation({formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}) {
+export function enableValidation({formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}) {
   const formList = Array.from(document.querySelectorAll(formSelector));
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', evt => {
