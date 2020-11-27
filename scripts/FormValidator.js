@@ -13,6 +13,14 @@ export function hideError(formElement, inputElement, inputErrorClass, errorClass
   errorElement.classList.remove(errorClass);
   errorElement.textContent = '';
 }
+// проверка валидности поля
+export function checkInputValidity(formElement, inputElement, inputErrorClass, errorClass) {
+  if (!inputElement.validity.valid) {
+    showError(formElement, inputElement, inputElement.validationMessage, inputErrorClass, errorClass);
+  } else {
+    hideError(formElement, inputElement, inputErrorClass, errorClass);
+  }
+}
 
 // проверка валидности полей в форме
 export function hasInvalidInput(inputList) {
@@ -29,15 +37,6 @@ export function toggleButtonState(inputList, submitElement, inactiveButtonClass)
   } else {
     submitElement.classList.remove(inactiveButtonClass);
     submitElement.disabled = false;
-  }
-}
-
-// проверка валидности поля
-export function checkInputValidity(formElement, inputElement, inputErrorClass, errorClass) {
-  if (!inputElement.validity.valid) {
-    showError(formElement, inputElement, inputElement.validationMessage, inputErrorClass, errorClass);
-  } else {
-    hideError(formElement, inputElement, inputErrorClass, errorClass);
   }
 }
 

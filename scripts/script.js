@@ -1,17 +1,11 @@
-import { initialCards } from './Card.js';
-import { showError, hideError, hasInvalidInput, toggleButtonState, checkInputValidity, setInputListeners, enableValidation } from './FormValidator.js';
-
-//карточки и контейнер
-const template = document.querySelector(".template");
-const cardsContainer = document.querySelector(".elements");
+// карточки и контейнер
+import { Card, cardsContainer } from './Card.js';
 
 // попапы и формы
 const popupProfile = document.querySelector(".popup_type_profile");
 const popupPlace = document.querySelector(".popup_type_place");
-const popupPreview = document.querySelector(".popup_type_image");
 const formEditProfile = document.querySelector(".popup__container_content_profile");
 const formAddPlace = document.querySelector(".popup__container_content_place");
-const imagePreview = document.querySelector(".popup__container_content_preview");
 
 // кнопки открытия попапов
 const buttonEditProfile = document.querySelector(".profile__edit-button");
@@ -24,49 +18,17 @@ const profileName = document.querySelector(".profile__name");
 const profileProfession = document.querySelector(".profile__profession");
 const placenameInput = document.querySelector(".popup__input_content_placename");
 const linkInput = document.querySelector(".popup__input_content_url");
-const popupImage = imagePreview.querySelector(".popup__image");
-const popupCaption = imagePreview.querySelector(".popup__caption");
 
-// формирование карточки
-function getCard(card) {
-  const cardElement = template.cloneNode(true).content;
-  const cardTitle = cardElement.querySelector(".element__title");
-  const cardImage = cardElement.querySelector(".element__image");
-  const cardLike = cardElement.querySelector('.element__like');
-  const cardDelete = cardElement.querySelector('.element__delete');
-
-  cardTitle.textContent = card.name;
-  cardImage.src = card.link;
-  cardImage.alt = card.name;
-  // добавляем слушатели
-  // — лайк/анлайк
-  cardLike.addEventListener('click', likeCard);
-  // — удаление карточки
-  cardDelete.addEventListener('click', removeCard);
- // — превью изображения
-  cardImage.addEventListener("click", () => handleImagePreview(card));
-
-  return cardElement;
-}
 
 // открытие попапа
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', evt => handleEscKey(evt, popup));
 }
-
 // закрытие попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', handleEscKey);
-}
-
-// открытие превью
-function handleImagePreview(card) {
-  popupImage.src = card.link;
-  popupImage.alt = card.name;
-  popupCaption.textContent = card.name;
-  openPopup(popupPreview);
 }
 
 // редактирование профиля
@@ -81,26 +43,13 @@ function handleProfileForm(evt) {
 // добавление карточки
 function handlePlaceForm(evt) {
   evt.preventDefault();
-  const card = getCard({
-      name: placenameInput.value,
-      link: linkInput.value
-    });
-  cardsContainer.prepend(card);
+  const card = new Card(placenameInput.value, linkInput.value, '.template');
+  const cardElement = card.generateCard();
+  cardsContainer.prepend(cardElement);
   closePopup(popupPlace);
 }
 
-// удаление карточки
-function removeCard(evt) {
-  const card = evt.target.closest('.element');
-  card.remove();
-}
-
-// лайк и анлайк
-function likeCard(evt) {
-  evt.target.classList.toggle('element__like_active');
-}
-
-// обраюотка нажатий мыши и клавиатуры, слушатели событий
+// обработка нажатий мыши и клавиатуры, слушатели событий
 
 // — открыть форму редактирования профиля и заполнить значения
 buttonEditProfile.addEventListener('click', () => {
@@ -170,9 +119,3 @@ function handleEnterKey(inputElement) {
     }
   }
 }
-
-// начальная загрузка карточек
-initialCards.forEach((data) => {
-  const card = getCard(data);
-  cardsContainer.append(card);
-});
