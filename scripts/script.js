@@ -1,55 +1,43 @@
-// карточки и контейнер
-import { Card, cardsContainer } from './Card.js';
+import { initialCards } from './initialCards.js'
+import { Card } from './Card.js';
+import { openPopup, closePopup, handleProfileForm, handlePlaceForm } from './popups.js';
+import { FormValidator } from './FormValidator.js';
 
+export const cardsContainer = document.querySelector('.elements');
 // попапы и формы
-const popupProfile = document.querySelector(".popup_type_profile");
-const popupPlace = document.querySelector(".popup_type_place");
-const formEditProfile = document.querySelector(".popup__container_content_profile");
-const formAddPlace = document.querySelector(".popup__container_content_place");
+export const popupProfile = document.querySelector('.popup_type_profile');
+export const popupPlace = document.querySelector('.popup_type_place');
+const formEditProfile = document.querySelector('.popup__container_content_profile');
+const formAddPlace = document.querySelector('.popup__container_content_place');
 
 // кнопки открытия попапов
-const buttonEditProfile = document.querySelector(".profile__edit-button");
-const buttonAddPlace = document.querySelector(".profile__add-button");
+const buttonEditProfile = document.querySelector('.profile__edit-button');
+const buttonAddPlace = document.querySelector('.profile__add-button');
 
 // поля карточки и формы
-const nameInput = document.querySelector(".popup__input_content_name");
-const jobInput = document.querySelector(".popup__input_content_profession");
-const profileName = document.querySelector(".profile__name");
-const profileProfession = document.querySelector(".profile__profession");
-const placenameInput = document.querySelector(".popup__input_content_placename");
-const linkInput = document.querySelector(".popup__input_content_url");
+export const nameInput = document.querySelector('.popup__input_content_name');
+export const jobInput = document.querySelector('.popup__input_content_profession');
+export const profileName = document.querySelector('.profile__name');
+export const profileProfession = document.querySelector('.profile__profession');
 
-
-// открытие попапа
-export function openPopup(popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', evt => handleEscKey(evt, popup));
+// добавление валидации
+// - настройки валидации
+const validationSettings = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
 }
-// закрытие попапа
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', handleEscKey);
-}
+const validateProfile = new FormValidator(validationSettings, formEditProfile);
+validateProfile.enableValidation();
 
-// редактирование профиля
-function handleProfileForm(evt) {
-  evt.preventDefault();
-   // записываем в текст страницы значения полей из формы
-  profileName.textContent = nameInput.value;
-  profileProfession.textContent = jobInput.value;
-  closePopup(popupProfile);
-}
+const validatePlace = new FormValidator(validationSettings, formAddPlace);
+validatePlace.enableValidation();
 
-// добавление карточки
-function handlePlaceForm(evt) {
-  evt.preventDefault();
-  const card = new Card(placenameInput.value, linkInput.value, '.template');
-  const cardElement = card.generateCard();
-  cardsContainer.prepend(cardElement);
-  closePopup(popupPlace);
-}
 
-// обработка нажатий мыши и клавиатуры, слушатели событий
+// обработка нажатий мыши, слушатели событий
 
 // — открыть форму редактирования профиля и заполнить значения
 buttonEditProfile.addEventListener('click', () => {
@@ -92,30 +80,14 @@ function enableClickClose() {
 
 enableClickClose();
 
-// - закрытие попапов нажатием Esc на клавиатуре
-function handleEscKey(evt, targetPopup) {
-  if (evt.key === 'Escape') {
-    closePopup(targetPopup);
-  }
-}
-
 // — отправка форм нажатием кнопки
 formEditProfile.addEventListener('submit', handleProfileForm);
 formAddPlace.addEventListener('submit', handlePlaceForm);
 
-// - отправка форм нажатием Enter
-function handleEnterKey(inputElement) {
 
-  if (evt.key === 'Enter') {
-   switch(inputElement)  {
-    case nameInput:
-    case jobInput:
-      handleProfileForm();
-      break;
-    case placenameInput:
-    case linkInput:
-      handlePlaceForm();
-      break;
-    }
-  }
-}
+// начальная загрузка карточек
+initialCards.forEach((data) => {
+  const card = new Card(data.name, data.link, '.template');
+  const cardElement = card.generateCard();
+  cardsContainer.append(cardElement);
+});
