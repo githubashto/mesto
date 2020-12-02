@@ -36,9 +36,11 @@ export function handleProfileForm(evt) {
 // добавление карточки
 export function handlePlaceForm(evt) {
   evt.preventDefault();
+  console.log(evt.target);
   const card = new Card(placenameInput.value, linkInput.value, '.template');
   const cardElement = card.generateCard();
   cardsContainer.prepend(cardElement);
+  evt.target.reset();
+  evt.target.querySelector('.popup__submit').classList.add('popup__submit_disabled');
   closePopup(popupPlace);
-  evt.querySelector('.popup__form').reset();
 }
