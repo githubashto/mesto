@@ -36,7 +36,6 @@ export function handleProfileForm(evt) {
 // добавление карточки
 export function handlePlaceForm(evt) {
   evt.preventDefault();
-  console.log(evt.target);
   const card = new Card(placenameInput.value, linkInput.value, '.template');
   const cardElement = card.generateCard();
   cardsContainer.prepend(cardElement);
