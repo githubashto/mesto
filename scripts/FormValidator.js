@@ -52,21 +52,6 @@ export class FormValidator {
   }
 }
 
-// - отправка форм нажатием Enter
-  _handleEnterKey(inputElement, evt) {
-    if (evt.key === 'Enter') {
-      switch(this._element)  {
-        case '.popup__container_content_profile':
-        handleProfileForm();
-        break;
-
-        case '.popup__container_content_place':
-        handlePlaceForm();
-        break;
-      }
-    }
-  }
-
 // добавляем слушатели к полям формы
   _setInputListeners() {
     const inputList = Array.from(this._element.querySelectorAll(this._input));
@@ -76,12 +61,6 @@ export class FormValidator {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
         this._toggleButtonState(inputList, submitElement);
-      });
-    // слушатель для Enter
-      inputElement.addEventListener('keydown', (evt) => {
-        if (!this._hasInvalidInput(inputList)) {
-          this._handleEnterKey(inputElement, evt);
-        }
       });
     });
   }
