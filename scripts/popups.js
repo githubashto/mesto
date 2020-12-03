@@ -40,6 +40,8 @@ export function handlePlaceForm(evt) {
   const cardElement = card.generateCard();
   cardsContainer.prepend(cardElement);
   evt.target.reset();
-  evt.target.querySelector('.popup__submit').classList.add('popup__submit_disabled');
+  const submitButton = evt.target.querySelector('.popup__submit');
+  submitButton.classList.add('popup__submit_disabled');
+  submitButton.setAttribute('disabled', '');
   closePopup(popupPlace);
 }
