@@ -2,8 +2,9 @@ import { initialCards } from './initialCards.js'
 import { Card } from './Card.js';
 import { openPopup, closePopup, handleProfileForm, handlePlaceForm } from './popups.js';
 import { FormValidator } from './FormValidator.js';
+import { Section } from './Section.js'
 
-export const cardsContainer = document.querySelector('.elements');
+export const cardsContainer = '.elements';
 // попапы и формы
 export const popupProfile = document.querySelector('.popup_type_profile');
 export const popupPlace = document.querySelector('.popup_type_place');
@@ -85,9 +86,13 @@ formEditProfile.addEventListener('submit', handleProfileForm);
 formAddPlace.addEventListener('submit', handlePlaceForm);
 
 
-// начальная загрузка карточек
-initialCards.forEach((data) => {
-  const card = new Card(data.name, data.link, '.template');
-  const cardElement = card.generateCard();
-  cardsContainer.append(cardElement);
-});
+export const cardList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item.name, item.link, '.template');
+    const cardElement = card.generateCard();
+    cardList.setItem(cardElement);
+  }
+}, cardsContainer);
+
+cardList.renderItems();
