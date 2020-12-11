@@ -1,9 +1,10 @@
-import { openPopup } from './popups.js';
+// import { openPopup } from './popups.js';
 export class Card {
-  constructor(name, link, template) {
+  constructor(name, link, template, handleCardClick) {
     this._name = name;
     this._link = link;
     this._template = template;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -34,7 +35,9 @@ export class Card {
     // — удаление карточки
     this._element.querySelector('.element__delete').addEventListener('click', () => this._remove());
     // — превью изображения
-    this._element.querySelector('.element__image').addEventListener("click", () => this._handleImagePreview());
+    this._element.querySelector('.element__image').addEventListener("click", () => {
+       this._handleCardClick(this._name, this._link);
+    });
   }
 
   // лайк и анлайк
@@ -42,19 +45,7 @@ export class Card {
     evt.target.classList.toggle('element__like_active');
   }
 
-  //открытие превью
-  _handleImagePreview() {
-    const popupPreview = document.querySelector(".popup_type_image");
-    const imagePreview = popupPreview.querySelector(".popup__container_content_preview");
-    const popupImage = imagePreview.querySelector(".popup__image");
-    const popupCaption = imagePreview.querySelector(".popup__caption");
-    popupImage.src = this._link;
-    popupImage.alt = this._name;
-    popupCaption.textContent = this._name;
-    openPopup(popupPreview);
-  }
-
-  // удаление карточки
+    // удаление карточки
   _remove() {
     this._element.remove();
   }
