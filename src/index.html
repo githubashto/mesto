@@ -10,16 +10,15 @@
   <meta property="og:locale" content="ru_RU">
   <meta property="og:site_name" content="Mesto — Russia">
   <title>Mesto — Russia</title>
-  <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="root">
   <header class="header block block_width_wide">
-    <img src="images/mesto-russia.svg" alt="Mesto Russia" class="logo">
+    <img src="<%=require('./images/mesto-russia.svg')%>" alt="Mesto Russia" class="logo">
   </header>
 
   <main class="block">
   <section class="profile">
-    <img src="./images/avatar.jpg" alt="Логотип Mesto" class="profile__avatar">
+    <img src="<%=require('./images/avatar.jpg')%>" alt="Логотип Mesto" class="profile__avatar">
     <div class="profile__info">
       <div class="profile__header">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -84,8 +83,5 @@
     </div>
     </article>
   </template>
-  <!-- <script type="module" src="./scripts/Card.js"></script>
-  <script type="module" src="./scripts/FormValidator.js"></script> -->
-  <script type="module" src="./scripts/script.js"></script>
   </body>
 </html>
