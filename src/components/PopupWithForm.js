@@ -4,6 +4,7 @@ export class PopupWithForm extends Popup {
   constructor(popupSelector, submitter) {
     super(popupSelector);
     this._submitter = submitter;
+    this._form = this._element.querySelector(validationSettings.formSelector);
   }
 
   _getInputValues() {
@@ -40,7 +41,7 @@ export class PopupWithForm extends Popup {
 
   close() {
     super.close();
-    this._element.querySelector(validationSettings.formSelector).reset();
+    this._form.reset();
     this._clearErrors();
   }
 }
