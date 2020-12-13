@@ -39,7 +39,7 @@ const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelecto
 const popupProfile = new PopupWithForm(popupProfileSelector, (data) => {
     userProfile.setUserInfo(data);
 });
-popupProfile.setEventListeners()
+popupProfile.setEventListeners();
 
 const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
   const card = new Card(data.placename, data.url, '.template', handleCardClick);
@@ -49,7 +49,7 @@ const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
   submitButton.classList.add('popup__submit_disabled');
   submitButton.disabled = true;
 });
-popupPlace.setEventListeners()
+popupPlace.setEventListeners();
 
 // обработка нажатий мыши, слушатели событий
 
@@ -87,6 +87,7 @@ export const cardList = new Section({
                           (name, link) =>  {
                             const popupPreview = new PopupWithImage('.popup_type_image');
                             popupPreview.open(name, link);
+                            popupPreview.setEventListeners();
                           });
     const cardElement = card.generateCard();
     cardList.setItem(cardElement);
