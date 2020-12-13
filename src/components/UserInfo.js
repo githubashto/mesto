@@ -1,7 +1,7 @@
 export class UserInfo {
-  constructor({ profileName, profileProfession }) {
-    this._name = profileName;
-    this._profession = profileProfession;
+  constructor({ profileNameSelector, profileProfessionSelector }) {
+    this._name = profileNameSelector;
+    this._profession = profileProfessionSelector;
   }
 
   getUserInfo() {

@@ -15,15 +15,15 @@ const popupPlaceSelector = '.popup_type_place';
 const formEditProfile = document.querySelector('.popup__container_content_profile');
 const formAddPlace = document.querySelector('.popup__container_content_place');
 
-// кнопки открытия попапов
+// кнопки открытия попапов с формами
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonAddPlace = document.querySelector('.profile__add-button');
 
 // поля карточки и формы
 const nameInput = document.querySelector('.popup__input_content_name');
 const jobInput = document.querySelector('.popup__input_content_profession');
-const profileName = '.profile__name';
-const profileProfession = '.profile__profession';
+const profileNameSelector = '.profile__name';
+const profileProfessionSelector = '.profile__profession';
 
 // настройки валидации
 const validationSettings = {
@@ -34,15 +34,8 @@ const validationSettings = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 }
-// добавление валидации
-const validateProfile = new FormValidator(validationSettings, formEditProfile);
-validateProfile.enableValidation();
-
-const validatePlace = new FormValidator(validationSettings, formAddPlace);
-validatePlace.enableValidation();
-
 // попапы и слушатели в них
-const userProfile = new UserInfo({ profileName, profileProfession} );
+const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector} );
 const popupProfile = new PopupWithForm(popupProfileSelector, (data) => {
     userProfile.setUserInfo(data);
 });
@@ -54,22 +47,29 @@ const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
   cardList.addItem(cardElement);
   const submitButton = popupPlace._element.querySelector('.popup__submit');
   submitButton.classList.add('popup__submit_disabled');
-  submitButton.setAttribute('disabled', '');
+  submitButton.disabled = true;
 });
 popupPlace.setEventListeners()
 
 // обработка нажатий мыши, слушатели событий
 
-// — открыть форму редактирования профиля и заполнить значения
+// открыть форму редактирования профиля
 buttonEditProfile.addEventListener('click', () => {
+  // заполнить значения полей
   nameInput.value = userProfile.getUserInfo().name;
   jobInput.value = userProfile.getUserInfo().profession;
   popupProfile.open();
+  // включить валидацию
+  const validateProfile = new FormValidator(validationSettings, formEditProfile);
+  validateProfile.enableValidation();
 });
 
 // - открыть форму добавления места
 buttonAddPlace.addEventListener('click', () => {
   popupPlace.open();
+  // включить валидацию
+  const validatePlace = new FormValidator(validationSettings, formAddPlace);
+  validatePlace.enableValidation();
 });
 
 export function handleCardClick(link, name) {

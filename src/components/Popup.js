@@ -25,9 +25,9 @@ export class Popup {
   }
 
   _handleOverlayClick(evt) {
-    const clickTarget = evt.target.closest('.popup__container');
+    const clickTargetPopup = evt.target.closest('.popup__container');
     // проверяем, не произошёл ли клик внутри попапа
-    if (!clickTarget) {
+    if (!clickTargetPopup) {
       this.close();
     }
   }
