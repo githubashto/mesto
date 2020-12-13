@@ -1,15 +1,15 @@
 // import { openPopup } from './popups.js';
 export class Card {
-  constructor(name, link, template, handleCardClick) {
+  constructor(name, link, cardSelector, handleCardClick) {
     this._name = name;
     this._link = link;
-    this._template = template;
+    this._selector = cardSelector;
     this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
     const cardElement = document
-      .querySelector(this._template)
+      .querySelector(this._selector)
       .content
       .querySelector('.element')
       .cloneNode(true);
