@@ -38,12 +38,8 @@ const cardElement = card.generateCard();
 return cardElement;
 }
 
-
 const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
   cardList.addItem(getCard(data.placename, data.url));
-  const submitButton = popupPlace._element.querySelector(validationSettings.submitButtonSelector);
-  submitButton.classList.add(validationSettings.inactiveButtonClass);
-  submitButton.disabled = true;
 });
 popupPlace.setEventListeners();
 const popupPreview = new PopupWithImage(popupImageSelector);
@@ -69,11 +65,6 @@ buttonAddPlace.addEventListener('click', () => {
   const validatePlace = new FormValidator(validationSettings, formAddPlace);
   validatePlace.enableValidation();
 });
-
-function handleCardClick(link, name) {
-  const popupPreview = new PopupWithImage(popupImageSelector);
-  popupPreview.open(link, name);
-}
 
 // начальная загрузка карточек
 const cardList = new Section({
