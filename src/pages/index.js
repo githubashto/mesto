@@ -29,10 +29,18 @@ const popupProfile = new PopupWithForm(popupProfileSelector, (data) => {
 });
 popupProfile.setEventListeners();
 
+// функция создания карточки
+function getCard(name, link) {
+  const card = new Card(name, link, cardSelector, (name, link) =>  {
+      popupPreview.open(name, link);
+    });
+const cardElement = card.generateCard();
+return cardElement;
+}
+
+
 const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
-  const card = new Card(data.placename, data.url, '.template', handleCardClick);
-  const cardElement = card.generateCard();
-  cardList.addItem(cardElement);
+  cardList.addItem(getCard(data.placename, data.url));
   const submitButton = popupPlace._element.querySelector(validationSettings.submitButtonSelector);
   submitButton.classList.add(validationSettings.inactiveButtonClass);
   submitButton.disabled = true;
@@ -62,23 +70,16 @@ buttonAddPlace.addEventListener('click', () => {
   validatePlace.enableValidation();
 });
 
-export function handleCardClick(link, name) {
+function handleCardClick(link, name) {
   const popupPreview = new PopupWithImage(popupImageSelector);
   popupPreview.open(link, name);
 }
 
 // начальная загрузка карточек
-export const cardList = new Section({
+const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item.name,
-                          item.link,
-                          cardSelector,
-                          (name, link) =>  {
-                            popupPreview.open(name, link);
-                          });
-    const cardElement = card.generateCard();
-    cardList.setItem(cardElement);
+    cardList.setItem(getCard(item.name, item.link));
   }
 }, cardsContainer);
 
