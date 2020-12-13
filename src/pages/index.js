@@ -37,6 +37,8 @@ const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
   submitButton.disabled = true;
 });
 popupPlace.setEventListeners();
+const popupPreview = new PopupWithImage(popupImageSelector);
+popupPreview.setEventListeners();
 
 // обработка нажатий мыши, слушатели событий
 
@@ -72,9 +74,9 @@ export const cardList = new Section({
                           item.link,
                           '.template',
                           (name, link) =>  {
-                            const popupPreview = new PopupWithImage(popupImageSelector);
+                            // const popupPreview = new PopupWithImage(popupImageSelector);
                             popupPreview.open(name, link);
-                            popupPreview.setEventListeners();
+                            // popupPreview.setEventListeners();
                           });
     const cardElement = card.generateCard();
     cardList.setItem(cardElement);
