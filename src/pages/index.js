@@ -1,5 +1,5 @@
 import './index.css';
-import { initialCards } from '../components/initialCards.js'
+import { initialCards } from '../utils/initialCards.js'
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js'
@@ -19,7 +19,7 @@ import { cardsContainer,
          profileProfessionSelector,
          validationSettings,
          popupImageSelector
-} from '../components/constants.js';
+} from '../utils/constants.js';
 
 // попапы и слушатели в них
 const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector} );
