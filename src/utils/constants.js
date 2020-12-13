@@ -1,5 +1,6 @@
 // секция карточек
 export const cardsContainer = '.elements';
+export const cardSelector = '.template';
 // попапы и формы
 export const popupProfileSelector = '.popup_type_profile';
 export const popupPlaceSelector = '.popup_type_place';

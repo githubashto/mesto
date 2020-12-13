@@ -18,7 +18,8 @@ import { cardsContainer,
          profileNameSelector,
          profileProfessionSelector,
          validationSettings,
-         popupImageSelector
+         popupImageSelector,
+         cardSelector,
 } from '../utils/constants.js';
 
 // попапы и слушатели в них
@@ -72,11 +73,9 @@ export const cardList = new Section({
   renderer: (item) => {
     const card = new Card(item.name,
                           item.link,
-                          '.template',
+                          cardSelector,
                           (name, link) =>  {
-                            // const popupPreview = new PopupWithImage(popupImageSelector);
                             popupPreview.open(name, link);
-                            // popupPreview.setEventListeners();
                           });
     const cardElement = card.generateCard();
     cardList.setItem(cardElement);
