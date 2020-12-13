@@ -6,34 +6,21 @@ import { Section } from '../components/Section.js'
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { cardsContainer,
+         popupProfileSelector,
+         popupPlaceSelector,
+         formEditProfile,
+         formAddPlace,
+         buttonEditProfile,
+         buttonAddPlace,
+         nameInput,
+         jobInput,
+         profileNameSelector,
+         profileProfessionSelector,
+         validationSettings,
+         popupImageSelector
+} from '../components/constants.js';
 
-
-const cardsContainer = '.elements';
-// попапы и формы
-const popupProfileSelector = '.popup_type_profile';
-const popupPlaceSelector = '.popup_type_place';
-const formEditProfile = document.querySelector('.popup__container_content_profile');
-const formAddPlace = document.querySelector('.popup__container_content_place');
-
-// кнопки открытия попапов с формами
-const buttonEditProfile = document.querySelector('.profile__edit-button');
-const buttonAddPlace = document.querySelector('.profile__add-button');
-
-// поля карточки и формы
-const nameInput = document.querySelector('.popup__input_content_name');
-const jobInput = document.querySelector('.popup__input_content_profession');
-const profileNameSelector = '.profile__name';
-const profileProfessionSelector = '.profile__profession';
-
-// настройки валидации
-const validationSettings = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-}
 // попапы и слушатели в них
 const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector} );
 const popupProfile = new PopupWithForm(popupProfileSelector, (data) => {
@@ -45,8 +32,8 @@ const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
   const card = new Card(data.placename, data.url, '.template', handleCardClick);
   const cardElement = card.generateCard();
   cardList.addItem(cardElement);
-  const submitButton = popupPlace._element.querySelector('.popup__submit');
-  submitButton.classList.add('popup__submit_disabled');
+  const submitButton = popupPlace._element.querySelector(validationSettings.submitButtonSelector);
+  submitButton.classList.add(validationSettings.inactiveButtonClass);
   submitButton.disabled = true;
 });
 popupPlace.setEventListeners();
@@ -73,7 +60,7 @@ buttonAddPlace.addEventListener('click', () => {
 });
 
 export function handleCardClick(link, name) {
-  const popupPreview = new PopupWithImage('.popup_type_image');
+  const popupPreview = new PopupWithImage(popupImageSelector);
   popupPreview.open(link, name);
 }
 
@@ -85,7 +72,7 @@ export const cardList = new Section({
                           item.link,
                           '.template',
                           (name, link) =>  {
-                            const popupPreview = new PopupWithImage('.popup_type_image');
+                            const popupPreview = new PopupWithImage(popupImageSelector);
                             popupPreview.open(name, link);
                             popupPreview.setEventListeners();
                           });

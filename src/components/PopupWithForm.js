@@ -1,4 +1,5 @@
 import { Popup } from './Popup.js';
+import { validationSettings } from './constants.js';
 export class PopupWithForm extends Popup {
   constructor(popupSelector, submitter) {
     super(popupSelector);
@@ -7,7 +8,7 @@ export class PopupWithForm extends Popup {
 
   _getInputValues() {
     this._inputValues = {};
-    const inputList = Array.from(this._element.querySelectorAll('.popup__input'));
+    const inputList = Array.from(this._element.querySelectorAll(validationSettings.inputSelector));
     inputList.forEach((input) => {
       this._inputValues[input.name] = input.value;
     });
@@ -24,8 +25,22 @@ export class PopupWithForm extends Popup {
     });
   };
 
+  _clearErrors() {
+    const popupInputs = Array.from(this._element.querySelectorAll(validationSettings.inputSelector));
+    popupInputs.forEach((element) => {
+      element.classList.remove(validationSettings.inputErrorClass);
+    });
+    const popupErrors = Array.from(this._element.querySelectorAll('[id$=-error]'));
+    popupErrors.forEach((element) => {
+      element.classList.remove(validationSettings.errorClass);
+      element.textContent = '';
+    });
+  }
+
+
   close() {
     super.close();
-    this._element.querySelector('.popup__form').reset();
+    this._element.querySelector(validationSettings.formSelector).reset();
+    this._clearErrors();
   }
 }
