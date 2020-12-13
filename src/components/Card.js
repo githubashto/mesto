@@ -48,6 +48,7 @@ export class Card {
     // удаление карточки
   _remove() {
     this._element.remove();
+    this._element = null;
   }
 }
 
