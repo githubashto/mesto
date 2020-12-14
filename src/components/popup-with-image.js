@@ -1,4 +1,4 @@
-import { Popup } from './Popup.js';
+import { Popup } from './popup.js';
 export class PopupWithImage extends Popup {
   open(name, link) {
     const imagePreview = this._element.querySelector('.popup__container_content_preview');
