@@ -23,7 +23,7 @@ import { cardsContainer,
 } from '../utils/constants.js';
 
 // попапы и слушатели в них
-const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector} );
+const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector });
 const popupProfile = new PopupWithForm(popupProfileSelector, (data) => {
     userProfile.setUserInfo(data);
 });
@@ -45,6 +45,12 @@ popupPlace.setEventListeners();
 const popupPreview = new PopupWithImage(popupImageSelector);
 popupPreview.setEventListeners();
 
+// включить валидацию
+const validateProfile = new FormValidator(validationSettings, formEditProfile);
+validateProfile.enableValidation();
+const validatePlace = new FormValidator(validationSettings, formAddPlace);
+validatePlace.enableValidation();
+
 // обработка нажатий мыши, слушатели событий
 
 // открыть форму редактирования профиля
@@ -52,18 +58,14 @@ buttonEditProfile.addEventListener('click', () => {
   // заполнить значения полей
   nameInput.value = userProfile.getUserInfo().name;
   jobInput.value = userProfile.getUserInfo().profession;
+  validateProfile.clearErrors();
   popupProfile.open();
-  // включить валидацию
-  const validateProfile = new FormValidator(validationSettings, formEditProfile);
-  validateProfile.enableValidation();
 });
 
 // - открыть форму добавления места
 buttonAddPlace.addEventListener('click', () => {
+  validatePlace.clearErrors();
   popupPlace.open();
-  // включить валидацию
-  const validatePlace = new FormValidator(validationSettings, formAddPlace);
-  validatePlace.enableValidation();
 });
 
 // начальная загрузка карточек

@@ -26,17 +26,17 @@ export class PopupWithForm extends Popup {
     });
   };
 
-  _clearErrors() {
-    const popupInputs = Array.from(this._element.querySelectorAll(validationSettings.inputSelector));
-    popupInputs.forEach((element) => {
-      element.classList.remove(validationSettings.inputErrorClass);
-    });
-    const popupErrors = Array.from(this._element.querySelectorAll('[id$=-error]'));
-    popupErrors.forEach((element) => {
-      element.classList.remove(validationSettings.errorClass);
-      element.textContent = '';
-    });
-  }
+  // _clearErrors() {
+  //   const popupInputs = Array.from(this._element.querySelectorAll(validationSettings.inputSelector));
+  //   popupInputs.forEach((element) => {
+  //     element.classList.remove(validationSettings.inputErrorClass);
+  //   });
+  //   const popupErrors = Array.from(this._element.querySelectorAll('[id$=-error]'));
+  //   popupErrors.forEach((element) => {
+  //     element.classList.remove(validationSettings.errorClass);
+  //     element.textContent = '';
+  //   });
+  // }
 
 
   close() {
