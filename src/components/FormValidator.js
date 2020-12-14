@@ -2,7 +2,7 @@ export class FormValidator {
   constructor(validationSettings, formElement) {
     this._element = formElement;
     this._input = validationSettings.inputSelector;
-    this._submit = validationSettings.submitButtonSelector;
+    this._submit = this._element.querySelector(validationSettings.submitButtonSelector);
     this._inactive = validationSettings.inactiveButtonClass;
     this._inputError = validationSettings.inputErrorClass;
     this._error = validationSettings.errorClass;
@@ -55,7 +55,7 @@ export class FormValidator {
 // добавляем слушатели к полям формы
   _setInputListeners() {
     const inputList = Array.from(this._element.querySelectorAll(this._input));
-    const submitElement = this._element.querySelector(this._submit);
+    const submitElement = this._submit;
     this._toggleButtonState(inputList, submitElement);
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
@@ -68,14 +68,9 @@ export class FormValidator {
   clearErrors() {
     const popupInputs = Array.from(this._element.querySelectorAll(this._input));
     popupInputs.forEach((element) => {
-      // element.classList.remove(validationSettings.inputErrorClass);
       this._hideError(element);
+      this._toggleButtonState(popupInputs, this._submit);
     });
-    // const popupErrors = Array.from(this._element.querySelectorAll('[id$=-error]'));
-    // popupErrors.forEach((element) => {
-    //   element.classList.remove(validationSettings.errorClass);
-    //   element.textContent = '';
-    // });
   }
 
 // включаем валидацию

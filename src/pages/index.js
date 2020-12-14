@@ -26,7 +26,9 @@ import { cardsContainer,
 const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector });
 const popupProfile = new PopupWithForm(popupProfileSelector, (data) => {
     userProfile.setUserInfo(data);
-});
+  },
+  validationSettings.formSelector,
+  validationSettings.inputSelector);
 popupProfile.setEventListeners();
 
 // функция создания карточки
@@ -40,7 +42,10 @@ return cardElement;
 
 const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
   cardList.addItem(getCard(data.placename, data.url));
-});
+  },
+  validationSettings.formSelector,
+  validationSettings.inputSelector
+);
 popupPlace.setEventListeners();
 const popupPreview = new PopupWithImage(popupImageSelector);
 popupPreview.setEventListeners();

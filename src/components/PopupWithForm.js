@@ -1,15 +1,15 @@
 import { Popup } from './Popup.js';
-import { validationSettings } from '../utils/constants.js';
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, submitter) {
+  constructor(popupSelector, submitter, formSelector, inputSelector) {
     super(popupSelector);
     this._submitter = submitter;
-    this._form = this._element.querySelector(validationSettings.formSelector);
+    this._form = this._element.querySelector(formSelector);
+    this._input = inputSelector;
   }
 
   _getInputValues() {
     this._inputValues = {};
-    const inputList = Array.from(this._element.querySelectorAll(validationSettings.inputSelector));
+    const inputList = Array.from(this._element.querySelectorAll(this._input));
     inputList.forEach((input) => {
       this._inputValues[input.name] = input.value;
     });
@@ -26,22 +26,8 @@ export class PopupWithForm extends Popup {
     });
   };
 
-  // _clearErrors() {
-  //   const popupInputs = Array.from(this._element.querySelectorAll(validationSettings.inputSelector));
-  //   popupInputs.forEach((element) => {
-  //     element.classList.remove(validationSettings.inputErrorClass);
-  //   });
-  //   const popupErrors = Array.from(this._element.querySelectorAll('[id$=-error]'));
-  //   popupErrors.forEach((element) => {
-  //     element.classList.remove(validationSettings.errorClass);
-  //     element.textContent = '';
-  //   });
-  // }
-
-
   close() {
     super.close();
     this._form.reset();
-    this._clearErrors();
   }
 }
