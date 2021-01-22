@@ -17,7 +17,7 @@ export const nameInput = document.querySelector('.popup__input_content_name');
 export const jobInput = document.querySelector('.popup__input_content_profession');
 export const profileNameSelector = '.profile__name';
 export const profileProfessionSelector = '.profile__profession';
-
+export const profileAvatarSelector = '.profile__avatar';
 
 // настройки валидации (формы, кнопки, поля и ошибки)
 export const validationSettings = {

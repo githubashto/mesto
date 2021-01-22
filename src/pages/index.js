@@ -6,6 +6,7 @@ import { Section } from '../components/Section.js'
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { Api } from '../components/Api.js';
 import { cardsContainer,
          popupProfileSelector,
          popupPlaceSelector,
@@ -20,7 +21,14 @@ import { cardsContainer,
          validationSettings,
          popupImageSelector,
          cardSelector,
+         profileAvatarSelector
 } from '../utils/constants.js';
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1',
+  groupId: 'cohort-19',
+  token: '1dc60437-1a25-4631-a3f7-2f7b0fec8038',
+});
 
 // попапы и слушатели в них
 const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector });
@@ -73,6 +81,14 @@ buttonAddPlace.addEventListener('click', () => {
   popupPlace.open();
 });
 
+// загрузка данных пользователя
+api.getUserInfo()
+  .then(result => {
+    userProfile.setUserInfo({name: result.name, profession: result.about});
+    document.querySelector(profileAvatarSelector).src = result.avatar;
+  })
+  .catch(err => console.log(`Ошибка при получении данных ${err}`));
+
 // начальная загрузка карточек
 const cardList = new Section({
   items: initialCards,
@@ -82,3 +98,5 @@ const cardList = new Section({
 }, cardsContainer);
 
 cardList.renderItems();
+
+
