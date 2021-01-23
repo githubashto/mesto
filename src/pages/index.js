@@ -51,7 +51,6 @@ function getCard(name, link, selector) {
       popupPreview.open(name, link);
     })
   const cardElement = card.generateCard();
-  console.log(card._setEventsListener);
   return cardElement;
 }
 
@@ -97,13 +96,17 @@ api.getUserInfo()
   .catch(err => console.log(`Ошибка при получении данных ${err}`));
 
 // начальная загрузка карточек
-const cardList = new Section({
-  items: initialCards,
-  renderer: (item) => {
+const cardList = new Section({ renderer:
+  item => {
     cardList.setItem(getCard(item.name, item.link, cardSelectorInitial));
   }
 }, cardsContainer);
 
-cardList.renderItems();
+api.getInitialCards()
+.then(result => {
+  cardList.renderItems(result);
+})
+.catch(err => console.log(`Ошибка при получении данных ${err}`));
+
 
 

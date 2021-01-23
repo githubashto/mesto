@@ -18,19 +18,25 @@ export class Card {
 
   generateCard() {
     this._element = this._getTemplate();
+    this._addContent();
     this._setEventsListener();
+
+    return this._element;
+  }
+
+  _addContent() {
     const cardTitle = this._element.querySelector('.element__title');
     const cardImage = this._element.querySelector('.element__image');
     cardTitle.textContent = this._name;
     cardImage.src = this._link;
     cardImage.alt = this._name;
-    return this._element;
   }
 
   _setEventsListener() {
 // добавляем слушатели
     // — лайк/анлайк
     this._element.querySelector('.element__like').addEventListener('click', this._likeCard);
+
     // - превью
     this._element.querySelector('.element__image').addEventListener("click", () => {
       this._handleCardClick(this._name, this._link);
@@ -40,12 +46,6 @@ export class Card {
   // лайк и анлайк
    _likeCard(evt) {
     evt.target.classList.toggle('element__like_active');
-  }
-
-    // удаление карточки
-  _remove() {
-    this._element.remove();
-    this._element = null;
   }
 }
 

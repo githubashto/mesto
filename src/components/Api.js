@@ -5,7 +5,7 @@ export class Api {
   }
 
   getInitialCards() {
-    return fetch(`${this._address}/users/me`, {
+    return fetch(`${this._address}/cards`, {
       headers: {
         authorization: this._token,
         'Content-Type': 'application/json'
@@ -16,7 +16,7 @@ export class Api {
           return response.json();
         }
 
-      return Promise.reject(`Ошибка ${response.status}`)
+      return Promise.reject(response.status)
       })
   }
 
@@ -32,7 +32,7 @@ export class Api {
           return response.json();
         }
 
-      return Promise.reject(`Ошибка ${response.status}`)
+      return Promise.reject(response.status)
       })
   }
 
