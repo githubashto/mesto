@@ -34,6 +34,7 @@ export class Card {
 // добавляем слушатели
     // — лайк/анлайк
     this._element.querySelector('.element__like').addEventListener('click', this._likeCard);
+
     // - превью
     this._element.querySelector('.element__image').addEventListener("click", () => {
       this._handleCardClick(this._name, this._link);
@@ -43,12 +44,6 @@ export class Card {
   // лайк и анлайк
    _likeCard(evt) {
     evt.target.classList.toggle('element__like_active');
-  }
-
-    // удаление карточки
-  _remove() {
-    this._element.remove();
-    this._element = null;
   }
 }
 
