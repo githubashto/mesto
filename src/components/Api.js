@@ -5,7 +5,19 @@ export class Api {
   }
 
   getInitialCards() {
+    return fetch(`${this._address}/users/me`, {
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
 
+      return Promise.reject(`Ошибка ${response.status}`)
+      })
   }
 
   getUserInfo() {

@@ -1,6 +1,7 @@
 import './index.css';
 import { initialCards } from '../utils/initialCards.js'
 import { Card } from '../components/Card.js';
+import { OwnCard } from '../components/OwnCard.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js'
 import { PopupWithImage } from '../components/PopupWithImage.js';
@@ -21,7 +22,8 @@ import { cardsContainer,
          validationSettings,
          popupImageSelector,
          cardSelector,
-         profileAvatarSelector
+         cardSelectorInitial,
+         profileAvatarSelector,
 } from '../utils/constants.js';
 
 const api = new Api({
@@ -40,16 +42,21 @@ const popupProfile = new PopupWithForm(popupProfileSelector, (data) => {
 popupProfile.setEventListeners();
 
 // функция создания карточки
-function getCard(name, link) {
-  const card = new Card(name, link, cardSelector, (name, link) =>  {
+function getCard(name, link, selector) {
+  const card = (selector === cardSelectorInitial)
+    ? new Card(name, link, selector, (name, link) =>  {
       popupPreview.open(name, link);
-    });
-const cardElement = card.generateCard();
-return cardElement;
+    })
+    : new OwnCard(name, link, selector, (name, link) =>  {
+      popupPreview.open(name, link);
+    })
+  const cardElement = card.generateCard();
+  console.log(card._setEventsListener);
+  return cardElement;
 }
 
 const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
-  cardList.addItem(getCard(data.placename, data.url));
+  cardList.addItem(getCard(data.placename, data.url, cardSelector));
   },
   validationSettings.formSelector,
   validationSettings.inputSelector
@@ -66,7 +73,7 @@ validatePlace.enableValidation();
 
 // обработка нажатий мыши, слушатели событий
 
-// открыть форму редактирования профиля
+// - открыть форму редактирования профиля
 buttonEditProfile.addEventListener('click', () => {
   // заполнить значения полей
   nameInput.value = userProfile.getUserInfo().name;
@@ -93,7 +100,7 @@ api.getUserInfo()
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
-    cardList.setItem(getCard(item.name, item.link));
+    cardList.setItem(getCard(item.name, item.link, cardSelectorInitial));
   }
 }, cardsContainer);
 
