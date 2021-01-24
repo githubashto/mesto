@@ -73,12 +73,16 @@ export class Api {
       : Promise.reject(`Ошибка ${result.status}`))
   }
 
-  getCardLikes() {
-
-  }
-
-  deleteCard() {
-
+  deleteCard(cardId) {
+    return fetch(`${this._address}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token,
+      },
+    })
+    .then(result => result.ok
+      ? result.json()
+      : Promise.reject(`Ошибка ${result.status}`))
   }
 
   putCardLike() {

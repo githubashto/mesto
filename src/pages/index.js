@@ -33,17 +33,28 @@ const api = new Api({
   token: '1dc60437-1a25-4631-a3f7-2f7b0fec8038',
 });
 
+// узнаём наш id
+let userId = '';
+api.getUserInfo()
+  .then(result => {
+    userId = result._id;
+  })
+  .catch(err => console.log(`Ошибка при получении данных ${err}`));
+
 // функция создания карточки
-function getCard(name, link, likes, selector) {
+function getCard(name, link, likes, id, selector) {
   const card = (selector === cardSelectorInitial)
-    ? new Card(name, link, likes, selector, (name, link) =>  {
+    ? new Card(name, link, likes, id, selector, (name, link) =>  {
       popupPreview.open(name, link);
     })
-    : new OwnCard(name, link, likes, selector, (name, link) =>  {
+    : new OwnCard(name, link, likes, id, selector, (name, link) =>  {
       popupPreview.open(name, link);
     }, card => {
       popupConfirmDelete.open(card);
+    }, cardId => {
+      api.deleteCard(cardId);
     }
+
     )
   const cardElement = card.generateCard();
   return cardElement;
@@ -109,7 +120,11 @@ api.getUserInfo()
 // начальная загрузка карточек
 const cardList = new Section({ renderer:
   item => {
-    cardList.setItem(getCard(item.name, item.link, item.likes.length, cardSelectorInitial));
+    // если владелец — не я, карточка без кнопки удаления
+    const selector = (item.owner._id !== userId)
+      ? cardSelectorInitial
+      : cardSelector;
+    cardList.setItem(getCard(item.name, item.link, item.likes.length, item._id, selector));
   }
 }, cardsContainer);
 
