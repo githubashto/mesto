@@ -42,12 +42,12 @@ const popupProfile = new PopupWithForm(popupProfileSelector, (data) => {
 popupProfile.setEventListeners();
 
 // функция создания карточки
-function getCard(name, link, selector) {
+function getCard(name, link, likes, selector) {
   const card = (selector === cardSelectorInitial)
-    ? new Card(name, link, selector, (name, link) =>  {
+    ? new Card(name, link, likes, selector, (name, link) =>  {
       popupPreview.open(name, link);
     })
-    : new OwnCard(name, link, selector, (name, link) =>  {
+    : new OwnCard(name, link, likes, selector, (name, link) =>  {
       popupPreview.open(name, link);
     })
   const cardElement = card.generateCard();
@@ -55,7 +55,7 @@ function getCard(name, link, selector) {
 }
 
 const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
-  cardList.addItem(getCard(data.placename, data.url, cardSelector));
+  cardList.addItem(getCard(data.placename, data.url, '', cardSelector));
   api.postNewCard(data);
   },
   validationSettings.formSelector,
@@ -99,7 +99,7 @@ api.getUserInfo()
 // начальная загрузка карточек
 const cardList = new Section({ renderer:
   item => {
-    cardList.setItem(getCard(item.name, item.link, cardSelectorInitial));
+    cardList.setItem(getCard(item.name, item.link, item.likes.length, cardSelectorInitial));
   }
 }, cardsContainer);
 
