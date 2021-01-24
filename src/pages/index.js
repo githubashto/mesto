@@ -56,6 +56,7 @@ function getCard(name, link, selector) {
 
 const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
   cardList.addItem(getCard(data.placename, data.url, cardSelector));
+  api.postNewCard(data);
   },
   validationSettings.formSelector,
   validationSettings.inputSelector
