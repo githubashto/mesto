@@ -6,6 +6,7 @@ import { Section } from '../components/Section.js'
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupConfirm } from '../components/PopupConfirm.js';
 import { Api } from '../components/Api.js';
 import { cardsContainer,
          popupProfileSelector,
@@ -23,6 +24,7 @@ import { cardsContainer,
          cardSelector,
          cardSelectorInitial,
          profileAvatarSelector,
+         popupConfirmSelector,
 } from '../utils/constants.js';
 
 const api = new Api({
@@ -30,16 +32,6 @@ const api = new Api({
   groupId: 'cohort-19',
   token: '1dc60437-1a25-4631-a3f7-2f7b0fec8038',
 });
-
-// попапы и слушатели в них
-const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector });
-const popupProfile = new PopupWithForm(popupProfileSelector, (data) => {
-    userProfile.setUserInfo(data);
-    api.patchUserInfo(data);
-  },
-  validationSettings.formSelector,
-  validationSettings.inputSelector);
-popupProfile.setEventListeners();
 
 // функция создания карточки
 function getCard(name, link, likes, selector) {
@@ -49,12 +41,25 @@ function getCard(name, link, likes, selector) {
     })
     : new OwnCard(name, link, likes, selector, (name, link) =>  {
       popupPreview.open(name, link);
-    })
+    }, card => {
+      popupConfirmDelete.open(card);
+    }
+    )
   const cardElement = card.generateCard();
   return cardElement;
 }
 
-const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
+// попапы и слушатели в них
+const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector });
+const popupProfile = new PopupWithForm(popupProfileSelector, data => {
+    userProfile.setUserInfo(data);
+    api.patchUserInfo(data);
+  },
+  validationSettings.formSelector,
+  validationSettings.inputSelector);
+popupProfile.setEventListeners();
+
+const popupPlace = new PopupWithForm(popupPlaceSelector, data => {
   cardList.addItem(getCard(data.placename, data.url, '', cardSelector));
   api.postNewCard(data);
   },
@@ -62,8 +67,13 @@ const popupPlace = new PopupWithForm(popupPlaceSelector, (data) => {
   validationSettings.inputSelector
 );
 popupPlace.setEventListeners();
+
 const popupPreview = new PopupWithImage(popupImageSelector);
 popupPreview.setEventListeners();
+
+const popupConfirmDelete = new PopupConfirm(popupConfirmSelector);
+popupConfirmDelete.setEventListeners();
+
 
 // включить валидацию
 const validateProfile = new FormValidator(validationSettings, formEditProfile);

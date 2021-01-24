@@ -1,8 +1,10 @@
 import { Card } from './Card.js';
+import { PopupConfirm } from './PopupConfirm.js';
 
 export class OwnCard extends Card {
-  constructor(name, link, selector, handleCardClick) {
-    super(name, link, selector, handleCardClick);
+  constructor(name, link, likes, selector, handleCardClick, handleDelete) {
+    super(name, link, likes, selector, handleCardClick);
+    this._handleDelete = handleDelete;
   }
 
   generateCard() {
@@ -18,12 +20,14 @@ export class OwnCard extends Card {
 
    _setEventsListener() {
     super._setEventsListener();
-    // удаление карточки
-    this._element.querySelector('.element__delete').addEventListener('click', () => this._remove());
+    // кнопка удаления
+    this._element
+      .querySelector('.element__delete')
+      .addEventListener('click', () => this._handleDelete(this));
    }
 
    // удаление карточки
-  _remove() {
+  remove() {
     this._element.remove();
     this._element = null;
   }

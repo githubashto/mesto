@@ -7,6 +7,7 @@ export const cardSelectorInitial = '.template-initial';
 export const popupProfileSelector = '.popup_type_profile';
 export const popupPlaceSelector = '.popup_type_place';
 export const popupImageSelector = '.popup_type_image';
+export const popupConfirmSelector = '.popup_type_confirm';
 export const formEditProfile = document.querySelector('.popup__container_content_profile');
 export const formAddPlace = document.querySelector('.popup__container_content_place');
 
