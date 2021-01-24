@@ -35,6 +35,7 @@ const api = new Api({
 const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector });
 const popupProfile = new PopupWithForm(popupProfileSelector, (data) => {
     userProfile.setUserInfo(data);
+    api.patchUserInfo(data);
   },
   validationSettings.formSelector,
   validationSettings.inputSelector);
