@@ -56,8 +56,21 @@ export class Api {
   }
 
 
-  postNewCard() {
-
+  postNewCard(data) {
+    return fetch(`${this._address}/cards`, {
+      method: 'POST',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: data.placename,
+        link: data.url,
+      })
+    })
+    .then(result => result.ok
+      ? result.json()
+      : Promise.reject(`Ошибка ${result.status}`))
   }
 
   getCardLikes() {
