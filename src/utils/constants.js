@@ -31,3 +31,12 @@ export const validationSettings = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 }
+
+// элементы карточки
+export const cardTitleSelector = '.element__title';
+export const cardImageSelector = '.element__image';
+export const cardLikesSelector = '.element__likes-number';
+export const deleteButtonSelector = '.element__delete';
+export const likeButtonSelector = '.element__like';
+export const activeLikeClass = 'element__like_active';
+
