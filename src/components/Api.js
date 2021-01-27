@@ -17,7 +17,7 @@ export class Api {
         return response.json();
       }
 
-      return Promise.reject(response.status)
+      return Promise.reject(response.status);
     })
   }
 
@@ -34,7 +34,7 @@ export class Api {
         return response.json();
       }
 
-      return Promise.reject(response.status)
+      return Promise.reject(response.status);
     })
   }
 
@@ -52,9 +52,8 @@ export class Api {
     })
     .then(result => result.ok
       ? result.json()
-      : Promise.reject(`Ошибка ${result.status}`))
+      : Promise.reject(`Ошибка ${result.status}`));
   }
-
 
   postNewCard(data) {
     return fetch(`${this._address}/cards`, {
@@ -68,9 +67,13 @@ export class Api {
         link: data.url,
       })
     })
-    .then(result => result.ok
-      ? result.json()
-      : Promise.reject(`Ошибка ${result.status}`))
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+
+      return Promise.reject(response.status);
+    })
   }
 
   deleteCard(cardId) {
@@ -80,16 +83,48 @@ export class Api {
         authorization: this._token,
       },
     })
-    .then(result => result.ok
-      ? result.json()
-      : Promise.reject(`Ошибка ${result.status}`))
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+
+      return Promise.reject(response.status);
+    })
   }
 
-  putCardLike() {
+  putCardLike(cardId) {
+    return fetch(`${this._address}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._token,
+      },
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
 
+      return Promise.reject(response.status);
+  })
   }
 
-  patchUserPortrait() {
+ deleteCardLike(cardId) {
+    return fetch(`${this._address}/cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token,
+      },
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+
+      return Promise.reject(response.status);
+  })
+ }
+
+ patchUserPortrait() {
 
   }
 }

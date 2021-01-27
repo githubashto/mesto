@@ -1,6 +1,5 @@
 import './index.css';
 import { Card } from '../components/Card.js';
-import { OwnCard } from '../components/OwnCard.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js'
 import { PopupWithImage } from '../components/PopupWithImage.js';
@@ -42,20 +41,29 @@ api.getUserInfo()
   .catch(err => console.log(`Ошибка при получении данных ${err}`));
 
 // функция создания карточки
-function getCard(name, link, likes, id, selector) {
-  const card = (selector === cardSelectorInitial)
-    ? new Card(name, link, likes, id, selector, (name, link) =>  {
+function getCard(name, link, likes, id, isOwn, selector, isLiked) {
+  const card = new Card(name, link, likes, id, isOwn, selector, isLiked, (name, link) => {
       popupPreview.open(name, link);
-    })
-    : new OwnCard(name, link, likes, id, selector, (name, link) =>  {
-      popupPreview.open(name, link);
-    }, card => {
-      popupConfirmDelete.open(card);
-    }, cardId => {
-      api.deleteCard(cardId);
-    }
+      }, id => {
+        api.putCardLike(id)
+          .then(response => {
+           card.updateLikes(response.likes.length);
+         })
+         .catch(err => console.log(`Ошибка при получении данных ${err}`));
+       }, id => {
+        api.deleteCardLike(id)
+          .then(response => {
+             card.updateLikes(response.likes.length);
+           })
+          .catch(err => console.log(`Ошибка при получении данных ${err}`));
+       }, id => {
+        api.deleteCardLike(id);
+        }, card => {
+        popupConfirmDelete.open(card);
+        }, id => {
+        api.deleteCard(id);
+  });
 
-    )
   const cardElement = card.generateCard();
   return cardElement;
 }
@@ -71,8 +79,9 @@ const popupProfile = new PopupWithForm(popupProfileSelector, data => {
 popupProfile.setEventListeners();
 
 const popupPlace = new PopupWithForm(popupPlaceSelector, data => {
-  cardList.addItem(getCard(data.placename, data.url, '', cardSelector));
+  cardList.addItem(getCard(data.placename, data.url, '', '', cardSelector));
   api.postNewCard(data);
+
   },
   validationSettings.formSelector,
   validationSettings.inputSelector
@@ -121,18 +130,23 @@ api.getUserInfo()
 const cardList = new Section({ renderer:
   item => {
     // если владелец — не я, карточка без кнопки удаления
-    const selector = (item.owner._id !== userId)
-      ? cardSelectorInitial
-      : cardSelector;
-    cardList.setItem(getCard(item.name, item.link, item.likes.length, item._id, selector));
+    const isOwn = item.owner._id === userId;
+    const selector = isOwn === true
+       ? cardSelector
+       : cardSelectorInitial;
+    const isLiked = item.likes.some(liker =>
+      {
+        return liker._id === userId;
+      });
+      cardList.setItem(getCard(item.name, item.link, item.likes.length, item._id, isOwn, selector, isLiked));
   }
 }, cardsContainer);
 
 api.getInitialCards()
-.then(result => {
-  cardList.renderItems(result);
-})
-.catch(err => console.log(`Ошибка при получении данных ${err}`));
+  .then(result => {
+    cardList.renderItems(result);
+  })
+  .catch(err => console.log(`Ошибка при получении данных ${err}`));
 
 
 
