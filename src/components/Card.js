@@ -1,11 +1,12 @@
-import { cardTitleSelector,
+import { cardElementSelector,
+         cardTitleSelector,
          cardImageSelector,
          cardLikesSelector,
          likeButtonSelector,
          activeLikeClass,
          deleteButtonSelector } from "../utils/constants.js";
 export class Card {
-   constructor(name, link, likes, id, isOwn, selector, isLiked, handleCardClick, handleLike, handleUnlike, handleDeleteClick, deleteCard) {
+   constructor({name, link, likes, id}, isOwn, selector, isLiked, handleCardClick, handleLike, handleUnlike, handleDeleteClick, deleteCard) {
     this._name = name;
     this._link = link;
     this._likes = likes;
@@ -24,7 +25,7 @@ export class Card {
     const cardElement = document
       .querySelector(this._selector)
       .content
-      .querySelector('.element')
+      .querySelector(cardElementSelector)
       .cloneNode(true);
 
     return cardElement;

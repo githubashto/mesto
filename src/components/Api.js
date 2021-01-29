@@ -124,8 +124,20 @@ export class Api {
   })
  }
 
- patchUserPortrait() {
-
+ patchUserAvatar(data) {
+  return fetch(`${this._address}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: {
+      authorization: this._token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      avatar: data.avatar,
+    })
+  })
+  .then(result => result.ok
+    ? result.json()
+    : Promise.reject(`Ошибка ${result.json().message}`));
   }
 }
 

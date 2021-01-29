@@ -2,18 +2,22 @@
 export const cardsContainer = '.elements';
 export const cardSelector = '.template';
 export const cardSelectorInitial = '.template-initial';
+export const cardElementSelector = '.element';
 
 // попапы и формы
 export const popupProfileSelector = '.popup_type_profile';
 export const popupPlaceSelector = '.popup_type_place';
+export const popupAvatarSelector = '.popup_type_avatar';
 export const popupImageSelector = '.popup_type_image';
 export const popupConfirmSelector = '.popup_type_confirm';
 export const formEditProfile = document.querySelector('.popup__container_content_profile');
 export const formAddPlace = document.querySelector('.popup__container_content_place');
+export const formEditAvatar = document.querySelector('.popup__container_content_avatar');
 
 // кнопки открытия попапов с формами
 export const buttonEditProfile = document.querySelector('.profile__edit-button');
 export const buttonAddPlace = document.querySelector('.profile__add-button');
+export const buttonEditAvatar = document.querySelector('.profile__edit-avatar');
 
 // поля карточки и формы
 export const nameInput = document.querySelector('.popup__input_content_name');

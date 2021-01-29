@@ -20,6 +20,9 @@
   <section class="profile">
     <div class="profile__portrait">
       <img src="" alt="Портрет профиля" class="profile__avatar">
+      <div class="profile__portrait-overlay">
+        <button type="button" class="profile__edit-avatar"></button>
+      </div>
     </div>
     <div class="profile__info">
       <div class="profile__header">
@@ -52,6 +55,19 @@
       </form>
     </div>
   </section>
+ <!--Попап редактирования аватара-->
+ <section class="popup popup_type_avatar">
+  <div class="popup__container popup__container_content_avatar">
+    <button type="button" class="popup__close popup__close_content_profile"></button>
+    <form class="popup__form" name="avatar" novalidate>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <input type="url" name="avatar" id="form-avatar" placeholder="Ссылка на картинку" value="" class="popup__input popup__input_content_avatar" required>
+      <span id = "form-avatar-error" class="popup__error"></span>
+      <button type="submit" class="popup__submit popup__submit_content_avatar">Сохранить</button>
+    </form>
+  </div>
+</section>
+
   <!--Попап добавления карточки-->
   <section class="popup popup_type_place">
     <div class="popup__container popup__container_content_place">

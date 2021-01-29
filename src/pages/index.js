@@ -10,9 +10,12 @@ import { Api } from '../components/Api.js';
 import { cardsContainer,
          popupProfileSelector,
          popupPlaceSelector,
+         popupAvatarSelector,
          formEditProfile,
+         formEditAvatar,
          formAddPlace,
          buttonEditProfile,
+         buttonEditAvatar,
          buttonAddPlace,
          nameInput,
          jobInput,
@@ -32,17 +35,12 @@ const api = new Api({
   token: '1dc60437-1a25-4631-a3f7-2f7b0fec8038',
 });
 
-// узнаём наш id
+// наш id
 let userId = '';
-api.getUserInfo()
-  .then(result => {
-    userId = result._id;
-  })
-  .catch(err => console.log(`Ошибка при получении данных ${err}`));
 
 // функция создания карточки
-function getCard(name, link, likes, id, isOwn, selector, isLiked) {
-  const card = new Card(name, link, likes, id, isOwn, selector, isLiked, (name, link) => {
+function getCard({name, link, likes, id}, isOwn, selector, isLiked) {
+  const card = new Card({name, link, likes, id}, isOwn, selector, isLiked, (name, link) => {
       popupPreview.open(name, link);
       }, id => {
         api.putCardLike(id)
@@ -69,19 +67,42 @@ function getCard(name, link, likes, id, isOwn, selector, isLiked) {
 }
 
 // попапы и слушатели в них
-const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector });
+const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector, profileAvatarSelector });
 const popupProfile = new PopupWithForm(popupProfileSelector, data => {
-    userProfile.setUserInfo(data);
-    api.patchUserInfo(data);
-  },
+  userProfile.setUserInfo(data);
+  api.patchUserInfo(data)
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        }
+      })
+      .catch(err => console.log(`Ошибка при получении данных ${err}`));
+    },
   validationSettings.formSelector,
   validationSettings.inputSelector);
 popupProfile.setEventListeners();
 
-const popupPlace = new PopupWithForm(popupPlaceSelector, data => {
-  cardList.addItem(getCard(data.placename, data.url, '', '', cardSelector));
-  api.postNewCard(data);
+const popupAvatar = new PopupWithForm(popupAvatarSelector, data => {
+  userProfile.setUserAvatar(data.avatar);
+  api.patchUserAvatar(data)
+  .then(res => {
+    if (res.ok) {
+      return res.json()
+    }
+  })
+  .catch(err => console.log(`Ошибка при получении данных ${err}`));;
+  },
+validationSettings.formSelector,
+validationSettings.inputSelector
+);
+popupAvatar.setEventListeners();
 
+const popupPlace = new PopupWithForm(popupPlaceSelector, data => {
+  api.postNewCard(data)
+    .then(result => {
+        cardList.addItem(getCard({name: result.name, link: result.link, likes: result.likes.length, id: result._id}, true, cardSelector, false));
+      })
+    .catch(err => console.log(`Ошибка при получении данных ${err}`));
   },
   validationSettings.formSelector,
   validationSettings.inputSelector
@@ -94,12 +115,14 @@ popupPreview.setEventListeners();
 const popupConfirmDelete = new PopupConfirm(popupConfirmSelector);
 popupConfirmDelete.setEventListeners();
 
-
 // включить валидацию
 const validateProfile = new FormValidator(validationSettings, formEditProfile);
 validateProfile.enableValidation();
 const validatePlace = new FormValidator(validationSettings, formAddPlace);
 validatePlace.enableValidation();
+const validateAvatar = new FormValidator(validationSettings, formEditAvatar);
+validateAvatar.enableValidation();
+
 
 // обработка нажатий мыши, слушатели событий
 
@@ -112,6 +135,13 @@ buttonEditProfile.addEventListener('click', () => {
   popupProfile.open();
 });
 
+
+// - открыть форму редактирования портрета
+buttonEditAvatar.addEventListener('click', () => {
+  validateAvatar.clearErrors();
+  popupAvatar.open();
+});
+
 // - открыть форму добавления места
 buttonAddPlace.addEventListener('click', () => {
   validatePlace.clearErrors();
@@ -121,8 +151,9 @@ buttonAddPlace.addEventListener('click', () => {
 // загрузка данных пользователя
 api.getUserInfo()
   .then(result => {
+    userId = result._id;
     userProfile.setUserInfo({name: result.name, profession: result.about});
-    document.querySelector(profileAvatarSelector).src = result.avatar;
+    userProfile.setUserAvatar(result.avatar);
   })
   .catch(err => console.log(`Ошибка при получении данных ${err}`));
 
@@ -138,7 +169,7 @@ const cardList = new Section({ renderer:
       {
         return liker._id === userId;
       });
-      cardList.setItem(getCard(item.name, item.link, item.likes.length, item._id, isOwn, selector, isLiked));
+      cardList.setItem(getCard({name: item.name, link: item.link, likes: item.likes.length, id: item._id}, isOwn, selector, isLiked));
   }
 }, cardsContainer);
 
