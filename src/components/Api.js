@@ -17,7 +17,7 @@ export class Api {
         return response.json();
       }
 
-      return Promise.reject(response.status);
+      return Promise.reject(`${response.status}: ${response.message}`);
     })
   }
 
@@ -34,7 +34,7 @@ export class Api {
         return response.json();
       }
 
-      return Promise.reject(response.status);
+      return Promise.reject(`${response.status}: ${response.message}`);
     })
   }
 
@@ -50,9 +50,13 @@ export class Api {
         about: data.profession,
       })
     })
-    .then(result => result.ok
-      ? result.json()
-      : Promise.reject(`Ошибка ${result.status}`));
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+
+      return Promise.reject(`${response.status}: ${response.message}`);
+    })
   }
 
   postNewCard(data) {
@@ -72,7 +76,7 @@ export class Api {
         return response.json();
       }
 
-      return Promise.reject(response.status);
+      return Promise.reject(`${response.status}: ${response.message}`);
     })
   }
 
@@ -88,7 +92,7 @@ export class Api {
         return response.json();
       }
 
-      return Promise.reject(response.status);
+      return Promise.reject(`${response.status}: ${response.message}`);
     })
   }
 
@@ -104,8 +108,8 @@ export class Api {
         return response.json();
       }
 
-      return Promise.reject(response.status);
-  })
+      return Promise.reject(`${response.status}: ${response.message}`);
+    })
   }
 
  deleteCardLike(cardId) {
@@ -120,8 +124,8 @@ export class Api {
         return response.json();
       }
 
-      return Promise.reject(response.status);
-  })
+      return Promise.reject(`${response.status}: ${response.message}`);
+    })
  }
 
  patchUserAvatar(data) {
@@ -135,10 +139,12 @@ export class Api {
       avatar: data.avatar,
     })
   })
-  .then(result => result.ok
-    ? result.json()
-    : Promise.reject(`Ошибка ${result.json().message}`));
-  }
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    }
+
+    return Promise.reject(`${response.status}: ${response.message}`);
+  })
+ }
 }
-
-
