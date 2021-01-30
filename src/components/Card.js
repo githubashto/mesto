@@ -6,7 +6,7 @@ import { cardElementSelector,
          activeLikeClass,
          deleteButtonSelector } from "../utils/constants.js";
 export class Card {
-   constructor({name, link, likes, id}, isOwn, selector, isLiked, handleCardClick, handleLike, handleUnlike, handleDeleteClick, deleteCard) {
+   constructor({name, link, likes, id}, isOwn, selector, isLiked, handleCardClick, handleLike, handleDeleteClick, deleteCard) {
     this._name = name;
     this._link = link;
     this._likes = likes;
@@ -16,7 +16,6 @@ export class Card {
     this._selector = selector;
     this._handleCardClick = handleCardClick;
     this._handleLike = handleLike;
-    this._handleUnlike = handleUnlike;
     this._handleDeleteClick = handleDeleteClick;
     this._deleteCard = deleteCard;
   }
@@ -28,6 +27,18 @@ export class Card {
       .querySelector(cardElementSelector)
       .cloneNode(true);
     return cardElement;
+  }
+
+  getId() {
+    return this._id;
+  }
+
+  getLikeState() {
+    return this._isLiked;
+  }
+
+  getData() {
+    return [this._name, this._link];
   }
 
   generateCard() {
@@ -45,7 +56,7 @@ export class Card {
     this._cardTitle.textContent = this._name;
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
-    this.updateLikes(this._likes);
+    this._updateLikes(this._likes);
     if (this._isLiked) {
       this._likeButton.classList.add(activeLikeClass);
     }
@@ -54,13 +65,13 @@ export class Card {
   _setEventsListener() {
 // добавляем слушатели
     // — лайк/анлайк
-    this._likeButton.addEventListener('click', evt => {
-      this._likeCard(evt);
+    this._likeButton.addEventListener('click', () => {
+      this._handleLike(this.getId());
     });
 
     // - превью
     this._cardImage.addEventListener("click", () => {
-      this._handleCardClick(this._name, this._link);
+      this._handleCardClick(this.getData());
     });
 
     // - кнопка удаления
@@ -72,28 +83,25 @@ export class Card {
   }
 
   // лайк и анлайк
-   _likeCard(evt) {
-     //если лайк стоит — снимаем
-      if (this._isLiked) {
-        this._likeButton.classList.remove(activeLikeClass);
-        this._isLiked = false;
-        this._handleUnlike(this._id);
-       } else {
-        this._likeButton.classList.add(activeLikeClass);
-        this._isLiked = true;
-        this._handleLike(this._id);
-
-      }
+   likeCard(likesNumber) {
+    this._likeButton.classList.add(activeLikeClass);
+    this._isLiked = true;
+    this._updateLikes(likesNumber);
   }
+
+   unlikeCard(likesNumber) {
+     this._likeButton.classList.remove(activeLikeClass);
+     this._isLiked = false;
+     this._updateLikes(likesNumber);
+    }
 
   // удаление карточки
   remove() {
     this._element.remove();
     this._element = null;
-    this._deleteCard(this._id);
   }
 
-  updateLikes(likesNumber) {
+  _updateLikes(likesNumber) {
     this._likes = likesNumber;
     this._cardLikes.textContent = (likesNumber !== 0)
     ? likesNumber

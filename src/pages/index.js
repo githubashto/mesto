@@ -40,28 +40,40 @@ let userId = '';
 
 // функция создания карточки
 function getCard({name, link, likes, id}, isOwn, selector, isLiked) {
-  const card = new Card({name, link, likes, id}, isOwn, selector, isLiked, (name, link) => {
+  const card = new Card({name, link, likes, id}, isOwn, selector, isLiked,
+    // обработка нажатия картинки
+    (name, link) => {
       popupPreview.open(name, link);
-      }, id => {
+    },
+    // обработка кнопки лайка
+    () => {
+      if (card.getLikeState()) {
+        // если лайк стоит, убираем
+        api.deleteCardLike(card.getId())
+          .then(result => {
+            card.unlikeCard(result.likes.length);
+        })
+          .catch(err => console.log(`Ошибка при снятии лайка ${err}`));
+      } else {
         api.putCardLike(id)
-          .then(response => {
-           card.updateLikes(response.likes.length);
-         })
-         .catch(err => console.log(`Ошибка при получении данных ${err}`));
-       }, id => {
-        api.deleteCardLike(id)
-          .then(response => {
-             card.updateLikes(response.likes.length);
-           })
-          .catch(err => console.log(`Ошибка при получении данных ${err}`));
-       }, id => {
-        api.deleteCardLike(id);
-        }, card => {
-        popupConfirmDelete.open(card);
-        }, id => {
-        api.deleteCard(id);
-  });
-
+          .then(result => {
+            card.likeCard(result.likes.length);
+        })
+        .catch(err => console.log(`Ошибка при отправке лайка ${err}`));
+      }
+    },
+    // обработка кнопки удаления
+    card => {
+      popupConfirmDelete.open(card);
+    },
+    // удаление после подтверждения
+    () => {
+      api.deleteCard(card.getId())
+        .then(result => {
+          card.remove();
+        })
+        .catch(err => console.log(`Ошибка при удалении карточки ${err}`));
+    });
   const cardElement = card.generateCard();
   return cardElement;
 }
@@ -69,28 +81,24 @@ function getCard({name, link, likes, id}, isOwn, selector, isLiked) {
 // попапы и слушатели в них
 const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector, profileAvatarSelector });
 const popupProfile = new PopupWithForm(popupProfileSelector, data => {
-  userProfile.setUserInfo(data);
   api.patchUserInfo(data)
-      .then(res => {
-        if (res.ok) {
-          return res.json()
-        }
-      })
-      .catch(err => console.log(`Ошибка при получении данных ${err}`));
+    .then(result => {
+      popupProfile.close();
+      userProfile.setUserInfo(result);
+    })
+    .catch(err => console.log(`Ошибка при обновлении профиля ${err}`));
     },
   validationSettings.formSelector,
   validationSettings.inputSelector);
 popupProfile.setEventListeners();
 
 const popupAvatar = new PopupWithForm(popupAvatarSelector, data => {
-  userProfile.setUserAvatar(data.avatar);
   api.patchUserAvatar(data)
-  .then(res => {
-    if (res.ok) {
-      return res.json()
-    }
-  })
-  .catch(err => console.log(`Ошибка при получении данных ${err}`));;
+    .then(result => {
+      popupAvatar.close();
+      userProfile.setUserAvatar(result.avatar);
+    })
+    .catch(err => console.log(`Ошибка при обновлении портрета ${err}`));
   },
 validationSettings.formSelector,
 validationSettings.inputSelector
@@ -100,9 +108,10 @@ popupAvatar.setEventListeners();
 const popupPlace = new PopupWithForm(popupPlaceSelector, data => {
   api.postNewCard(data)
     .then(result => {
+        popupPlace.close();
         cardList.addItem(getCard({name: result.name, link: result.link, likes: result.likes.length, id: result._id}, true, cardSelector, false));
       })
-    .catch(err => console.log(`Ошибка при получении данных ${err}`));
+    .catch(err => console.log(`Ошибка при добавлении карточки ${err}`));
   },
   validationSettings.formSelector,
   validationSettings.inputSelector
@@ -155,7 +164,7 @@ api.getUserInfo()
     userProfile.setUserInfo({name: result.name, profession: result.about});
     userProfile.setUserAvatar(result.avatar);
   })
-  .catch(err => console.log(`Ошибка при получении данных ${err}`));
+  .catch(err => console.log(`Ошибка при получении профиля ${err}`));
 
 // начальная загрузка карточек
 const cardList = new Section({ renderer:
@@ -177,7 +186,7 @@ api.getInitialCards()
   .then(result => {
     cardList.renderItems(result);
   })
-  .catch(err => console.log(`Ошибка при получении данных ${err}`));
+  .catch(err => console.log(`Ошибка при получении карточек ${err}`));
 
 
 
