@@ -84,7 +84,7 @@ const popupProfile = new PopupWithForm(popupProfileSelector, data => {
   api.patchUserInfo(data)
     .then(result => {
       popupProfile.close();
-      userProfile.setUserInfo(result);
+      userProfile.setUserInfo({name: result.name, profession: result.about});
     })
     .catch(err => console.log(`Ошибка при обновлении профиля ${err}`));
     },
