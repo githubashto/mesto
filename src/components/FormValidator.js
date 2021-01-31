@@ -6,6 +6,7 @@ export class FormValidator {
     this._inactive = validationSettings.inactiveButtonClass;
     this._inputError = validationSettings.inputErrorClass;
     this._error = validationSettings.errorClass;
+    this._inputList = Array.from(this._element.querySelectorAll(this._input));
   }
 
   // показать сообщение об ошибке
@@ -35,41 +36,38 @@ export class FormValidator {
   }
 
   //проверка валидности полей в форме
-  _hasInvalidInput(inputList) {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput() {
+    return this._inputList.some(inputElement => {
     return !inputElement.validity.valid;
     });
   }
 
 // переключение кнопки сабмита
-  _toggleButtonState(inputList, submitElement) {
-  if (this._hasInvalidInput(inputList)) {
-    submitElement.classList.add(this._inactive);
-    submitElement.disabled = true;
+  _toggleButtonState() {
+  if (this._hasInvalidInput()) {
+    this._submit.classList.add(this._inactive);
+    this._submit.disabled = true;
   } else {
-    submitElement.classList.remove(this._inactive);
-    submitElement.disabled = false;
+    this._submit.classList.remove(this._inactive);
+    this._submit.disabled = false;
   }
 }
 
 // добавляем слушатели к полям формы
   _setInputListeners() {
-    const inputList = Array.from(this._element.querySelectorAll(this._input));
-    const submitElement = this._submit;
-    this._toggleButtonState(inputList, submitElement);
-    inputList.forEach((inputElement) => {
+    this._toggleButtonState();
+    this._inputList.forEach(inputElement => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState(inputList, submitElement);
+        this._toggleButtonState();
       });
     });
   }
 
   clearErrors() {
-    const popupInputs = Array.from(this._element.querySelectorAll(this._input));
-    popupInputs.forEach((element) => {
-      this._hideError(element);
-      this._toggleButtonState(popupInputs, this._submit);
+    this._inputList.forEach(inputElement => {
+      this._hideError(inputElement);
+      this._toggleButtonState();
     });
   }
 
