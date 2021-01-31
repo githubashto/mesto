@@ -12,13 +12,7 @@ export class Api {
         'Content-Type': 'application/json'
       }
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-
-      return Promise.reject(`${response.status}: ${response.message}`);
-    })
+      .then(this._checkResponse);
   }
 
   getUserInfo() {
@@ -29,13 +23,7 @@ export class Api {
         'Content-Type': 'application/json'
       }
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-
-      return Promise.reject(`${response.status}: ${response.message}`);
-    })
+    .then(this._checkResponse);
   }
 
   patchUserInfo(data) {
@@ -50,13 +38,7 @@ export class Api {
         about: data.profession,
       })
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-
-      return Promise.reject(`${response.status}: ${response.message}`);
-    })
+    .then(this._checkResponse);
   }
 
   postNewCard(data) {
@@ -71,13 +53,7 @@ export class Api {
         link: data.url,
       })
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-
-      return Promise.reject(`${response.status}: ${response.message}`);
-    })
+    .then(this._checkResponse);
   }
 
   deleteCard(cardId) {
@@ -87,13 +63,7 @@ export class Api {
         authorization: this._token,
       },
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-
-      return Promise.reject(`${response.status}: ${response.message}`);
-    })
+    .then(this._checkResponse);
   }
 
   putCardLike(cardId) {
@@ -103,13 +73,7 @@ export class Api {
         authorization: this._token,
       },
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-
-      return Promise.reject(`${response.status}: ${response.message}`);
-    })
+    .then(this._checkResponse);
   }
 
  deleteCardLike(cardId) {
@@ -119,13 +83,7 @@ export class Api {
         authorization: this._token,
       },
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-
-      return Promise.reject(`${response.status}: ${response.message}`);
-    })
+    .then(this._checkResponse);
  }
 
  patchUserAvatar(data) {
@@ -139,12 +97,13 @@ export class Api {
       avatar: data.avatar,
     })
   })
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-
-    return Promise.reject(`${response.status}: ${response.message}`);
-  })
+  .then(this._checkResponse);
  }
+
+ _checkResponse(res) {
+  if (res.ok) {
+      return res.json();
+  }
+  return Promise.reject(`Ошибка ${res.status}: ${res.message}`);
+}
 }
