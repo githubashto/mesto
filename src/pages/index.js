@@ -55,7 +55,7 @@ function getCard({name, link, likes, id}, isOwn, selector, isLiked) {
         })
           .catch(err => console.log(`Ошибка при снятии лайка ${err}`));
       } else {
-        api.putCardLike(id)
+        api.putCardLike(card.getId())
           .then(result => {
             card.likeCard(result.likes.length);
         })
@@ -63,12 +63,12 @@ function getCard({name, link, likes, id}, isOwn, selector, isLiked) {
       }
     },
     // обработка кнопки удаления
-    card => {
+    () => {
       popupConfirmDelete.open(card);
     },
     // удаление после подтверждения
     () => {
-      api.deleteCard(card.getId())
+        api.deleteCard(card.getId())
         .then(result => {
           card.remove();
         })

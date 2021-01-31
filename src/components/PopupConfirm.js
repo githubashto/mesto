@@ -10,7 +10,7 @@ export class PopupConfirm extends Popup {
     this._element.addEventListener('submit', evt =>
     {
       evt.preventDefault();
-      this._card.remove();
+      this._card._deleteCard();
       super.close();
     });
  };
