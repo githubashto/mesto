@@ -1,12 +1,12 @@
 import { Popup } from './Popup.js';
 import { validationSettings } from '../utils/constants.js'
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, submitter, formSelector, inputSelector) {
+  constructor(popupSelector, submitter, formSelector, inputSelector, submitButtonSelector) {
     super(popupSelector);
     this._submitter = submitter;
     this._form = this._element.querySelector(formSelector);
     this._input = inputSelector;
-    this._submitButton = this._element.querySelector(validationSettings.submitButtonSelector);
+    this._submitButton = this._element.querySelector(submitButtonSelector);
   }
 
   _getInputValues() {

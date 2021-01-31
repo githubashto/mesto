@@ -27,7 +27,13 @@ import { cardsContainer,
          cardSelectorInitial,
          profileAvatarSelector,
          popupConfirmSelector,
-} from '../utils/constants.js';
+         cardElementSelector,
+         cardTitleSelector,
+         cardImageSelector,
+         cardLikesSelector,
+         likeButtonSelector,
+         activeLikeClass,
+         deleteButtonSelector } from "../utils/constants.js";
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1',
@@ -73,10 +79,18 @@ function getCard({name, link, likes, id}, isOwn, selector, isLiked) {
           card.remove();
         })
         .catch(err => console.log(`Ошибка при удалении карточки ${err}`));
-    });
+    },
+    { cardElementSelector,
+      cardTitleSelector,
+      cardImageSelector,
+      cardLikesSelector,
+      likeButtonSelector,
+      activeLikeClass,
+      deleteButtonSelector },
+  );
   const cardElement = card.generateCard();
   return cardElement;
-}
+};
 
 // попапы и слушатели в них
 const userProfile = new UserInfo({ profileNameSelector, profileProfessionSelector, profileAvatarSelector });
@@ -89,7 +103,9 @@ const popupProfile = new PopupWithForm(popupProfileSelector, data => {
     .catch(err => console.log(`Ошибка при обновлении профиля ${err}`));
     },
   validationSettings.formSelector,
-  validationSettings.inputSelector);
+  validationSettings.inputSelector,
+  validationSettings.submitButtonSelector
+  );
 popupProfile.setEventListeners();
 
 const popupAvatar = new PopupWithForm(popupAvatarSelector, data => {
@@ -100,8 +116,9 @@ const popupAvatar = new PopupWithForm(popupAvatarSelector, data => {
     })
     .catch(err => console.log(`Ошибка при обновлении портрета ${err}`));
   },
-validationSettings.formSelector,
-validationSettings.inputSelector
+  validationSettings.formSelector,
+  validationSettings.inputSelector,
+  validationSettings.submitButtonSelector,
 );
 popupAvatar.setEventListeners();
 
@@ -114,7 +131,8 @@ const popupPlace = new PopupWithForm(popupPlaceSelector, data => {
     .catch(err => console.log(`Ошибка при добавлении карточки ${err}`));
   },
   validationSettings.formSelector,
-  validationSettings.inputSelector
+  validationSettings.inputSelector,
+  validationSettings.submitButtonSelector,
 );
 popupPlace.setEventListeners();
 

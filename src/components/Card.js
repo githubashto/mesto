@@ -1,12 +1,13 @@
-import { cardElementSelector,
-         cardTitleSelector,
-         cardImageSelector,
-         cardLikesSelector,
-         likeButtonSelector,
-         activeLikeClass,
-         deleteButtonSelector } from "../utils/constants.js";
 export class Card {
-   constructor({name, link, likes, id}, isOwn, selector, isLiked, handleCardClick, handleLike, handleDeleteClick, deleteCard) {
+   constructor({name, link, likes, id}, isOwn, selector, isLiked, handleCardClick, handleLike,
+    handleDeleteClick, deleteCard,
+    { cardElementSelector,
+      cardTitleSelector,
+      cardImageSelector,
+      cardLikesSelector,
+      likeButtonSelector,
+      activeLikeClass,
+      deleteButtonSelector }) {
     this._name = name;
     this._link = link;
     this._likes = likes;
@@ -18,13 +19,20 @@ export class Card {
     this._handleLike = handleLike;
     this._handleDeleteClick = handleDeleteClick;
     this._deleteCard = deleteCard;
+    this._cardElementSelector = cardElementSelector;
+    this._cardTitleSelector = cardTitleSelector;
+    this._cardImageSelector = cardImageSelector;
+    this._cardLikesSelector = cardLikesSelector;
+    this._likeButtonSelector = likeButtonSelector;
+    this._activeLikeClass = activeLikeClass;
+    this._deleteButtonSelector = deleteButtonSelector;
   }
 
   _getTemplate() {
     const cardElement = document
       .querySelector(this._selector)
       .content
-      .querySelector(cardElementSelector)
+      .querySelector(this._cardElementSelector)
       .cloneNode(true);
     return cardElement;
   }
@@ -43,10 +51,10 @@ export class Card {
 
   generateCard() {
     this._element = this._getTemplate();
-    this._cardTitle = this._element.querySelector(cardTitleSelector);
-    this._cardImage = this._element.querySelector(cardImageSelector);
-    this._cardLikes = this._element.querySelector(cardLikesSelector);
-    this._likeButton = this._element.querySelector(likeButtonSelector);
+    this._cardTitle = this._element.querySelector(this._cardTitleSelector);
+    this._cardImage = this._element.querySelector(this._cardImageSelector);
+    this._cardLikes = this._element.querySelector(this._cardLikesSelector);
+    this._likeButton = this._element.querySelector(this._likeButtonSelector);
     this._addContent();
     this._setEventsListener();
     return this._element;
@@ -58,7 +66,7 @@ export class Card {
     this._cardImage.alt = this._name;
     this._updateLikes(this._likes);
     if (this._isLiked) {
-      this._likeButton.classList.add(activeLikeClass);
+      this._likeButton.classList.add(this._activeLikeClass);
     }
   }
 
@@ -77,20 +85,20 @@ export class Card {
     // - кнопка удаления
     if (this._isOwn) {
       this._element
-      .querySelector(deleteButtonSelector)
+      .querySelector(this._deleteButtonSelector)
       .addEventListener('click', () => this._handleDeleteClick(this));
     }
   }
 
   // лайк и анлайк
    likeCard(likesNumber) {
-    this._likeButton.classList.add(activeLikeClass);
+    this._likeButton.classList.add(this._activeLikeClass);
     this._isLiked = true;
     this._updateLikes(likesNumber);
   }
 
    unlikeCard(likesNumber) {
-     this._likeButton.classList.remove(activeLikeClass);
+     this._likeButton.classList.remove(this._activeLikeClass);
      this._isLiked = false;
      this._updateLikes(likesNumber);
     }
