@@ -48,7 +48,7 @@ let userId = '';
 function getCard({name, link, likes, id}, isOwn, selector, isLiked) {
   const card = new Card({name, link, likes, id}, isOwn, selector, isLiked,
     // обработка нажатия картинки
-    (name, link) => {
+    ([name, link]) => {
       popupPreview.open(name, link);
     },
     // обработка кнопки лайка
