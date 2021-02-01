@@ -104,7 +104,8 @@ const popupProfile = new PopupWithForm(popupProfileSelector, data => {
     },
   validationSettings.formSelector,
   validationSettings.inputSelector,
-  validationSettings.submitButtonSelector
+  validationSettings.submitButtonSelector,
+  'Сохранить',
   );
 popupProfile.setEventListeners();
 
@@ -119,6 +120,7 @@ const popupAvatar = new PopupWithForm(popupAvatarSelector, data => {
   validationSettings.formSelector,
   validationSettings.inputSelector,
   validationSettings.submitButtonSelector,
+  'Сохранить',
 );
 popupAvatar.setEventListeners();
 
@@ -133,6 +135,7 @@ const popupPlace = new PopupWithForm(popupPlaceSelector, data => {
   validationSettings.formSelector,
   validationSettings.inputSelector,
   validationSettings.submitButtonSelector,
+  'Создать',
 );
 popupPlace.setEventListeners();
 
