@@ -1,9 +1,15 @@
 # Проект 4: Место
 
-### Обзор
-**Интро**
+### Описание
+Одностраничный проект о путешествиях по России. Адаптивная вёрстка по макету в Figma.
 
-Это проект о путешествии по России.
-Ссылка: https://githubashto.github.io/mesto/
+#### Технологии
+Grid, Flexbox, @font-face, медиазапросы, JavaScript.
 
-Используемые инструменты: Grid, Flex, @font-face, медиазапросы, JavaScript.
+### Инструкция по развёртыванию 
+    $ git clone https://github.com/githubashto/mesto.git
+    npm run build
+    
+#### Демо
+https://githubashto.github.io/mesto/
+
