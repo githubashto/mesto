@@ -12,4 +12,3 @@ Grid, Flexbox, @font-face, медиазапросы, JavaScript.
     
 #### Демо
 https://githubashto.github.io/mesto/
-
