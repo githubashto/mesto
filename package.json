@@ -21,8 +21,8 @@
     "Classes"
   ],
   "devDependencies": {
+    "@babel/core": "^7.28.5",
     "@babel/preset-env": "^7.28.5",
-    "@babel/core": "^7.28.3",
     "autoprefixer": "^10.4.22",
     "babel-loader": "^10.0.0",
     "clean-webpack-plugin": "^4.0.0",
