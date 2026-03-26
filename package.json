@@ -33,7 +33,7 @@
     "mini-css-extract-plugin": "^2.10.0",
     "webpack": "^5.105.4",
     "postcss-loader": "^8.2.1",
-    "webpack-cli": "^6.0.1",
+    "webpack-cli": "^7.0.2",
     "webpack-dev-server": "^5.2.3"
   },
   "dependencies": {
